@@ -1,0 +1,31 @@
+@font-face {
+    font-family: "din";
+    src: url("../fonts/DINNextLTArabic-Regular-3.ttf");
+}
+
+body {
+    font-family: "din", sans-serif !important;
+    direction: rtl;
+}
+
+body * {
+    font-family: 'din', sans-serif !important;
+}
+
+.sidebar-menu .menu-arrow:before,
+.fa, .far, .fas {
+    font-family: "font awesome 5 free" !important;
+}
+
+.nav-menu > ul > li {
+    float: right;
+}
+
+.nav-menu > ul > li + li {
+    padding-right: 20px;
+    padding-left: 0;
+}
+
+a {
+    text-decoration: none !important;
+}
