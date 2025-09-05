@@ -1,10 +1,11 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 declare var $: any;
 
 @Component({
   selector: 'app-slider-image',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './slider-image.html',
   styleUrl: './slider-image.scss'
 })

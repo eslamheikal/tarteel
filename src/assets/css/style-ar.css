@@ -6,11 +6,27 @@
 body {
     font-family: "din", sans-serif !important;
     direction: rtl;
+    background-color: var(--primary-color);
 }
 
-body * {
+body *,
+a {
     font-family: 'din', sans-serif !important;
 }
+
+#header {
+    background-color: var(--primary-color);
+}
+
+.nav-menu a:hover, .nav-menu .active > a, .nav-menu li:hover > a {
+    color: #fff !important;
+}
+
+.nav-menu a {
+    font-weight: 500;
+    color: var(--secondary-color) !important;
+}
+
 
 .sidebar-menu .menu-arrow:before,
 .fa, .far, .fas {

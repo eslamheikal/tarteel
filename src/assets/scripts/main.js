@@ -1,172 +1,335 @@
 !(function ($) {
   "use strict";
 
-  // Smooth scroll for the navigation menu and links with .scrollto classes
-  $(document).on('click', '.nav-menu a, .mobile-nav a, .scrollto', function (e) {
-    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-      e.preventDefault();
-      var target = $(this.hash);
-      if (target.length) {
-
-        var scrollto = target.offset().top;
-        var scrolled = 20;
-
-        if ($('#header').length) {
-          scrollto -= $('#header').outerHeight()
-
-          if (!$('#header').hasClass('header-scrolled')) {
-            scrollto += scrolled;
-          }
-        }
-
-        if ($(this).attr("href") == '#header') {
-          scrollto = 0;
-        }
-
-        $('html, body').animate({
-          scrollTop: scrollto
-        }, 1500, 'easeInOutExpo');
-
-        if ($(this).parents('.nav-menu, .mobile-nav').length) {
-          $('.nav-menu .active, .mobile-nav .active').removeClass('active');
-          $(this).closest('li').addClass('active');
-        }
-
-        if ($('body').hasClass('mobile-nav-active')) {
-          $('body').removeClass('mobile-nav-active');
-          $('.mobile-nav-toggle i').toggleClass('icofont-navigation-menu icofont-close');
-          $('.mobile-nav-overly').fadeOut();
-        }
-        return false;
-      }
+  // ==============================================
+  // MOBILE NAVIGATION
+  // ==============================================
+  
+  /**
+   * Initialize mobile navigation
+   */
+  function initMobileNav() {
+    if ($('.nav-menu').length && !$('.mobile-nav').length) {
+      const $mobileNav = $('.nav-menu').clone().prop({
+        class: 'mobile-nav d-lg-none'
+      });
+      
+      $('body').append($mobileNav);
+      $('body').prepend('<button type="button" class="mobile-nav-toggle d-lg-none"><i class="icofont-navigation-menu"></i></button>');
+      $('body').append('<div class="mobile-nav-overly"></div>');
     }
-  });
+  }
 
-  // Mobile Navigation
-  if ($('.nav-menu').length) {
-    var $mobile_nav = $('.nav-menu').clone().prop({
-      class: 'mobile-nav d-lg-none'
-    });
-    $('body').append($mobile_nav);
-    $('body').prepend('<button type="button" class="mobile-nav-toggle d-lg-none"><i class="icofont-navigation-menu"></i></button>');
-    $('body').append('<div class="mobile-nav-overly"></div>');
+  /**
+   * Close mobile navigation
+   */
+  function closeMobileNav() {
+    $('body').removeClass('mobile-nav-active');
+    $('.mobile-nav-toggle i').removeClass('icofont-close').addClass('icofont-navigation-menu');
+    $('.mobile-nav-overly').fadeOut();
+  }
 
+  /**
+   * Open mobile navigation
+   */
+  function openMobileNav() {
+    $('body').addClass('mobile-nav-active');
+    $('.mobile-nav-toggle i').removeClass('icofont-navigation-menu').addClass('icofont-close');
+    $('.mobile-nav-overly').fadeIn();
+  }
+
+  /**
+   * Initialize mobile navigation event handlers
+   */
+  function initMobileNavEvents() {
+    // Remove existing event handlers to avoid duplicates
+    $(document).off('click', '.mobile-nav-toggle');
+    $(document).off('click', '.mobile-nav .drop-down > a');
+    $(document).off('click', '.mobile-nav a');
+    
+    // Mobile nav toggle event
     $(document).on('click', '.mobile-nav-toggle', function (e) {
-      $('body').toggleClass('mobile-nav-active');
-      $('.mobile-nav-toggle i').toggleClass('icofont-navigation-menu icofont-close');
-      $('.mobile-nav-overly').toggle();
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const isActive = $('body').hasClass('mobile-nav-active');
+      isActive ? closeMobileNav() : openMobileNav();
     });
 
+    // Dropdown events
     $(document).on('click', '.mobile-nav .drop-down > a', function (e) {
       e.preventDefault();
       $(this).next().slideToggle(300);
       $(this).parent().toggleClass('active');
     });
 
-    $(document).click(function (e) {
-      var container = $(".mobile-nav, .mobile-nav-toggle");
+    // Close mobile nav when clicking outside
+    $(document).on('click', function (e) {
+      const container = $(".mobile-nav, .mobile-nav-toggle");
       if (!container.is(e.target) && container.has(e.target).length === 0) {
         if ($('body').hasClass('mobile-nav-active')) {
-          $('body').removeClass('mobile-nav-active');
-          $('.mobile-nav-toggle i').toggleClass('icofont-navigation-menu icofont-close');
-          $('.mobile-nav-overly').fadeOut();
+          closeMobileNav();
         }
       }
     });
-  } else if ($(".mobile-nav, .mobile-nav-toggle").length) {
-    $(".mobile-nav, .mobile-nav-toggle").hide();
-  }
-  // Toggle .header-scrolled class to #header when page is scrolled
-  $(window).scroll(function () {
-    if ($(this).scrollTop() > 100) {
-      $('#header').addClass('header-scrolled');
-    } else {
-      $('#header').removeClass('header-scrolled');
-    }
-  });
 
-  if ($(window).scrollTop() > 100) {
-    $('#header').addClass('header-scrolled');
-  }
-
-  // Stick the header at top on scroll
-  $("#header").sticky({
-    topSpacing: 0,
-    zIndex: '50'
-  });
-
-  // Intro carousel
-  var heroCarousel = $("#heroCarousel");
-  var heroCarouselIndicators = $("#hero-carousel-indicators");
-  heroCarousel.find(".carousel-inner").children(".carousel-item").each(function (index) {
-    (index === 0) ?
-      heroCarouselIndicators.append("<li data-target='#heroCarousel' data-slide-to='" + index + "' class='active'></li>") :
-      heroCarouselIndicators.append("<li data-target='#heroCarousel' data-slide-to='" + index + "'></li>");
-  });
-
-  heroCarousel.on('slid.bs.carousel', function (e) {
-    $(this).find('.carousel-content ').addClass('animated fadeInDown');
-  });
-
-  // Back to top button
-  $(window).scroll(function () {
-    if ($(this).scrollTop() > 100) {
-      $('.back-to-top').fadeIn('slow');
-    } else {
-      $('.back-to-top').fadeOut('slow');
-    }
-  });
-
-  $('.back-to-top').click(function () {
-    $('html, body').animate({
-      scrollTop: 0
-    }, 1500, 'easeInOutExpo');
-    return false;
-  });
-
-  // Porfolio isotope and filter
-  $(window).on('load', function () {
-    var portfolioIsotope = $('.portfolio-container').isotope({
-      itemSelector: '.portfolio-item',
-      layoutMode: 'fitRows'
+    // Close mobile nav when clicking on mobile nav links
+    $(document).on('click', '.mobile-nav a', function (e) {
+      closeMobileNav();
     });
+  }
 
-    $('#portfolio-flters li').on('click', function () {
-      $("#portfolio-flters li").removeClass('filter-active');
-      $(this).addClass('filter-active');
+  // ==============================================
+  // SMOOTH SCROLL
+  // ==============================================
+  
+  /**
+   * Handle smooth scrolling for navigation links
+   */
+  function initSmoothScroll() {
+    $(document).on('click', '.nav-menu a, .mobile-nav a, .scrollto', function (e) {
+      if (location.pathname.replace(/^\//, '') === this.pathname.replace(/^\//, '') && 
+          location.hostname === this.hostname) {
+        e.preventDefault();
+        
+        const target = $(this.hash);
+        if (target.length) {
+          let scrollto = target.offset().top;
+          const scrolled = 20;
 
-      portfolioIsotope.isotope({
-        filter: $(this).data('filter')
+          if ($('#header').length) {
+            scrollto -= $('#header').outerHeight();
+            if (!$('#header').hasClass('header-scrolled')) {
+              scrollto += scrolled;
+            }
+          }
+
+          if ($(this).attr("href") === '#header') {
+            scrollto = 0;
+          }
+
+          $('html, body').animate({
+            scrollTop: scrollto
+          }, 1500, 'easeInOutExpo');
+
+          // Update active navigation item
+          if ($(this).parents('.nav-menu, .mobile-nav').length) {
+            $('.nav-menu .active, .mobile-nav .active').removeClass('active');
+            $(this).closest('li').addClass('active');
+          }
+
+          // Close mobile nav if open
+          if ($('body').hasClass('mobile-nav-active')) {
+            closeMobileNav();
+          }
+          
+          return false;
+        }
+      }
+    });
+  }
+
+  // ==============================================
+  // HEADER SCROLL EFFECTS
+  // ==============================================
+  
+  /**
+   * Initialize header scroll effects
+   */
+  function initHeaderScroll() {
+    const $header = $('#header');
+    
+    function handleScroll() {
+      if ($(window).scrollTop() > 100) {
+        $header.addClass('header-scrolled');
+        $('.back-to-top').fadeIn('slow');
+      } else {
+        $header.removeClass('header-scrolled');
+        $('.back-to-top').fadeOut('slow');
+      }
+    }
+
+    // Initial check
+    handleScroll();
+    
+    // Bind scroll event
+    $(window).on('scroll', handleScroll);
+  }
+
+  /**
+   * Initialize sticky header
+   */
+  function initStickyHeader() {
+    if ($("#header").length) {
+      $("#header").sticky({
+        topSpacing: 0,
+        zIndex: '50'
       });
+    }
+  }
+
+  // ==============================================
+  // BACK TO TOP BUTTON
+  // ==============================================
+  
+  /**
+   * Initialize back to top button
+   */
+  function initBackToTop() {
+    $('.back-to-top').on('click', function (e) {
+      e.preventDefault();
+      $('html, body').animate({
+        scrollTop: 0
+      }, 1500, 'easeInOutExpo');
+      return false;
     });
+  }
 
-    // Initiate venobox (lightbox feature used in portofilo)
-    $(document).ready(function () {
-      $('.venobox').venobox();
+  // ==============================================
+  // CAROUSEL
+  // ==============================================
+  
+  /**
+   * Initialize hero carousel
+   */
+  function initHeroCarousel() {
+    const $heroCarousel = $("#heroCarousel");
+    const $heroCarouselIndicators = $("#hero-carousel-indicators");
+    
+    if ($heroCarousel.length && $heroCarouselIndicators.length) {
+      $heroCarousel.find(".carousel-inner").children(".carousel-item").each(function (index) {
+        const indicator = index === 0 ? 
+          `<li data-target='#heroCarousel' data-slide-to='${index}' class='active'></li>` :
+          `<li data-target='#heroCarousel' data-slide-to='${index}'></li>`;
+        $heroCarouselIndicators.append(indicator);
+      });
+
+      $heroCarousel.on('slid.bs.carousel', function () {
+        $(this).find('.carousel-content').addClass('animated fadeInDown');
+      });
+    }
+  }
+
+  /**
+   * Initialize portfolio details carousel
+   */
+  function initPortfolioCarousel() {
+    if ($(".portfolio-details-carousel").length) {
+      $(".portfolio-details-carousel").owlCarousel({
+        autoplay: true,
+        dots: true,
+        loop: true,
+        items: 1
+      });
+    }
+  }
+
+  // ==============================================
+  // PORTFOLIO
+  // ==============================================
+  
+  /**
+   * Initialize portfolio isotope and filter
+   */
+  function initPortfolio() {
+    $(window).on('load', function () {
+      const $portfolioContainer = $('.portfolio-container');
+      
+      if ($portfolioContainer.length) {
+        const portfolioIsotope = $portfolioContainer.isotope({
+          itemSelector: '.portfolio-item',
+          layoutMode: 'fitRows'
+        });
+
+        $('#portfolio-flters li').on('click', function () {
+          $("#portfolio-flters li").removeClass('filter-active');
+          $(this).addClass('filter-active');
+
+          portfolioIsotope.isotope({
+            filter: $(this).data('filter')
+          });
+        });
+      }
+
+      // Initialize venobox
+      if ($('.venobox').length) {
+        $('.venobox').venobox();
+      }
     });
-  });
+  }
 
-  // Skills section
-  $('.skills-content').waypoint(function () {
-    $('.progress .progress-bar').each(function () {
-      $(this).css("width", $(this).attr("aria-valuenow") + '%');
-    });
-  }, {
-    offset: '80%'
-  });
+  // ==============================================
+  // SKILLS SECTION
+  // ==============================================
+  
+  /**
+   * Initialize skills section animations
+   */
+  function initSkills() {
+    if ($('.skills-content').length) {
+      $('.skills-content').waypoint(function () {
+        $('.progress .progress-bar').each(function () {
+          $(this).css("width", $(this).attr("aria-valuenow") + '%');
+        });
+      }, {
+        offset: '80%'
+      });
+    }
+  }
 
-  // Portfolio details carousel
-  $(".portfolio-details-carousel").owlCarousel({
-    autoplay: true,
-    dots: true,
-    loop: true,
-    items: 1
-  });
+  // ==============================================
+  // AOS ANIMATIONS
+  // ==============================================
+  
+  /**
+   * Initialize AOS (Animate On Scroll)
+   */
+  function initAOS() {
+    if (typeof AOS !== 'undefined') {
+      AOS.init({
+        duration: 800,
+        easing: "ease-in-out"
+      });
+    }
+  }
 
-  // Initi AOS
-  AOS.init({
-    duration: 800,
-    easing: "ease-in-out"
+  // ==============================================
+  // INITIALIZATION
+  // ==============================================
+  
+  /**
+   * Initialize all components
+   */
+  function init() {
+    // Initialize mobile navigation
+    initMobileNav();
+    initMobileNavEvents();
+    
+    // Initialize other components
+    initSmoothScroll();
+    initHeaderScroll();
+    initStickyHeader();
+    initBackToTop();
+    initHeroCarousel();
+    initPortfolioCarousel();
+    initPortfolio();
+    initSkills();
+    initAOS();
+  }
+
+  // Initialize on DOM ready
+  $(document).ready(init);
+  
+  // Re-initialize mobile nav after delays to ensure Angular has rendered
+  setTimeout(initMobileNav, 1000);
+  setTimeout(initMobileNav, 2000);
+  setTimeout(initMobileNavEvents, 1000);
+  setTimeout(initMobileNavEvents, 2000);
+  
+  // Re-initialize on window load
+  $(window).on('load', function() {
+    initMobileNav();
+    initMobileNavEvents();
   });
 
 })(jQuery);
