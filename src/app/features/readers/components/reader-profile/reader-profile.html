@@ -1,0 +1,167 @@
+@if (!isLoading && !error && reader) {
+<div class="reader-profile-container">
+  <!-- Header Section -->
+  <div class="profile-header">
+    <div class="profile-image">
+      <img [src]="'assets/img/readers/' + reader.imageUrl" 
+           [alt]="reader.name" 
+           class="reader-photo"
+           onerror="this.src='assets/img/readers/default-reader.png'">
+    </div>
+    <div class="profile-info">
+      <h1 class="reader-name">{{ reader.name }}</h1>
+      <div class="reader-details">
+        @if (reader.age) {
+        <div class="detail-item">
+          <i class="icon">👤</i>
+          <span>العمر: {{ reader.age }} سنة</span>
+        </div>
+        }
+        @if (reader.experience) {
+        <div class="detail-item">
+          <i class="icon">📚</i>
+          <span>{{ reader.experience }}</span>
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- Bio Section -->
+  @if (reader.bio) {
+  <div class="bio-section">
+    <h2>نبذة عن القارئ</h2>
+    <p class="bio-text">{{ reader.bio }}</p>
+  </div>
+  }
+
+  <!-- Specializations Section -->
+  @if (reader.specializations && reader.specializations.length > 0) {
+  <div class="specializations-section">
+    <h2>التخصصات</h2>
+    <div class="specializations-list">
+      @for (spec of reader.specializations; track spec) {
+      <span class="specialization-tag">
+        {{ spec }}
+      </span>
+      }
+    </div>
+  </div>
+  }
+
+  <!-- Achievements Section -->
+  @if (reader.achievements && reader.achievements.length > 0) {
+  <div class="achievements-section">
+    <h2>الإنجازات</h2>
+    <ul class="achievements-list">
+      @for (achievement of reader.achievements; track achievement) {
+      <li class="achievement-item">
+        <i class="icon">🏆</i>
+        <span>{{ achievement }}</span>
+      </li>
+      }
+    </ul>
+  </div>
+  }
+
+  <!-- Social Media Section -->
+  @if (reader.socialMedia) {
+  <div class="social-media-section">
+    <h2>وسائل التواصل</h2>
+    <div class="social-links">
+      @if (reader.socialMedia.youtube) {
+      <a [href]="reader.socialMedia.youtube" 
+         target="_blank" 
+         class="social-link youtube">
+        <i class="icon">📺</i>
+        <span>يوتيوب</span>
+      </a>
+      }
+      @if (reader.socialMedia.facebook) {
+      <a [href]="reader.socialMedia.facebook" 
+         target="_blank" 
+         class="social-link facebook">
+        <i class="icon">📘</i>
+        <span>فيسبوك</span>
+      </a>
+      }
+      @if (reader.socialMedia.instagram) {
+      <a [href]="reader.socialMedia.instagram" 
+         target="_blank" 
+         class="social-link instagram">
+        <i class="icon">📷</i>
+        <span>إنستجرام</span>
+      </a>
+      }
+    </div>
+  </div>
+  }
+
+  <!-- Audio Recordings Section -->
+  @if (audioRecordings.length > 0) {
+  <div class="audio-recordings-section">
+    <h2>المقاطع الصوتية</h2>
+    <div class="recordings-grid">
+      @for (recording of audioRecordings; track recording.id) {
+      <app-recording-card 
+        [recording]="recording"
+        [isSelected]="isSelected(recording.id)"
+        (selected)="selectRecording($event)">
+      </app-recording-card>
+      }
+    </div>
+  </div>
+  }
+
+  <!-- No Recordings Message -->
+  @if (audioRecordings.length === 0) {
+  <div class="no-recordings">
+    <div class="no-recordings-content">
+      <i class="icon">🎵</i>
+      <h3>لا توجد مقاطع صوتية متاحة</h3>
+      <p>لم يتم رفع أي مقاطع صوتية لهذا القارئ بعد</p>
+    </div>
+  </div>
+  }
+</div>
+}
+
+<!-- Loading State -->
+@if (isLoading) {
+<div class="loading-container">
+  <div class="loading-spinner"></div>
+  <p>جاري تحميل بيانات القارئ...</p>
+</div>
+}
+
+<!-- Error State -->
+@if (error) {
+<div class="error-container">
+  <div class="error-content">
+    <i class="icon">⚠️</i>
+    <h3>حدث خطأ</h3>
+    <p>{{ error }}</p>
+    <button class="retry-button" (click)="loadReaderProfile(reader?.id || 0)">
+      إعادة المحاولة
+    </button>
+  </div>
+</div>
+}
+
+<!-- Not Found State -->
+@if (!isLoading && !error && !reader) {
+<div class="not-found-container">
+  <div class="not-found-content">
+    <i class="icon">👤</i>
+    <h3>القارئ غير موجود</h3>
+    <p>لم يتم العثور على بيانات القارئ المطلوب</p>
+  </div>
+</div>
+}
+
+<!-- Fixed Recording Player -->
+<app-fixed-recording-player 
+  [recording]="selectedRecording"
+  [isVisible]="isPlayerOpen"
+  (closeRequested)="closePlayer()">
+</app-fixed-recording-player>

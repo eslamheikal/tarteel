@@ -1,0 +1,133 @@
+.recording-card {
+  // background: white;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--secondary-color);
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.recording-title {
+  font-size: 1rem;
+  color: #fff;
+  margin: 0 0 10px 0;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.recording-details-compact {
+  display: flex;
+  gap: 4px;
+  justify-content: space-between;
+  align-items: center;
+  overflow-x: auto;
+}
+
+.detail-compact {
+  background: #f8f9fa;
+  color: #555;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border: 1px solid #e9ecef;
+
+  &.duration {
+    background: #667eea;
+    color: white;
+    border: 1px solid #667eea;
+  }
+}
+
+
+
+
+.action-button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+  justify-content: center;
+
+  .icon {
+    font-size: 0.8rem;
+    font-style: normal;
+    font-weight: normal;
+  }
+
+  &.download-button {
+    background: #f8f9fa;
+    color: #555;
+    border: 1px solid #e9ecef;
+
+    &:hover {
+      background: #28a745;
+      color: white;
+      border: 1px solid #28a745;
+    }
+  }
+
+  &.share-button {
+    background: #f8f9fa;
+    color: #555;
+    border: 1px solid #e9ecef;
+
+    &:hover {
+      background: #17a2b8;
+      color: white;
+      border: 1px solid #17a2b8;
+    }
+  }
+
+  &.select-button {
+    background: #f8f9fa;
+    color: #555;
+    border: 1px solid #e9ecef;
+
+    &:hover {
+      background: #667eea;
+      color: white;
+      border: 1px solid #667eea;
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .recording-card {
+    padding: 15px;
+  }
+
+  .recording-details-compact {
+    gap: 6px;
+    padding-bottom: 5px;
+  }
+
+  .detail-compact {
+    font-size: 0.75rem;
+  }
+
+  .action-button {
+    padding: 3px 6px;
+    font-size: 0.75rem;
+    gap: 3px;
+
+    .icon {
+      font-size: 0.75rem;
+      font-style: normal;
+      font-weight: normal;
+    }
+  }
+}

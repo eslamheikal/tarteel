@@ -1,0 +1,77 @@
+@if (recordings.length > 0 && isOpen) {
+<div class="global-audio-player">
+  <div class="player-content">
+    <!-- Close Button -->
+    <button class="close-button" (click)="closePlayer()">
+      <i class="icon">✕</i>
+    </button>
+
+    <!-- Current Track Info -->
+    @if (currentRecording) {
+    <div class="current-track">
+      <div class="track-info">
+        <h4 class="track-title">{{ currentRecording.title }}</h4>
+        <div class="track-meta">
+          @if (currentRecording.surah) {
+          <span class="surah">📖 {{ currentRecording.surah }}</span>
+          }
+          @if (currentRecording.recitationType) {
+          <span class="recitation-type">🎵 {{ getRecitationTypeText(currentRecording.recitationType) }}</span>
+          }
+          <span class="duration">{{ currentRecording.duration }}</span>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- All Controls in One Row -->
+    @if (currentRecording) {
+    <div class="controls-row">
+
+      <!-- Volume Control -->
+      <div class="volume-section">
+        <div class="volume-control">
+          <button class="control-btn volume-btn" (click)="toggleMute()" [disabled]="!currentRecording">
+            <i class="icon">{{ isMuted ? '🔇' : '🔊' }}</i>
+          </button>
+          <div class="volume-slider-container">
+            <input type="range" class="volume-slider" min="0" max="100" [value]="volume"
+              (input)="onVolumeChange($event)" [disabled]="!currentRecording">
+          </div>
+        </div>
+      </div>
+
+      <!-- Repeat Control -->
+      <div class="repeat-section">
+        <button class="control-btn repeat-btn" (click)="toggleRepeat()" [disabled]="!currentRecording">
+          <i class="icon">{{ repeatMode === 'none' ? '🔁' : repeatMode === 'one' ? '🔂' : '🔁' }}</i>
+        </button>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="progress-section">
+        <div class="time-display">
+          <span class="current-time">{{ formatTime(currentTime) }}</span>
+          <span class="total-time">{{ formatTime(totalTime) }}</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar" (click)="seekTo($event)">
+            <div class="progress-fill" [style.width.%]="progressPercentage"></div>
+            <div class="progress-handle" [style.left.%]="progressPercentage"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Play/Pause Button -->
+      <div class="play-section">
+        <button class="control-btn play-pause main-play" (click)="togglePlayPause()" [disabled]="!currentRecording">
+          <i class="icon">{{ isPlaying ? '⏸️' : '▶️' }}</i>
+        </button>
+      </div>
+
+    </div>
+    }
+
+  </div>
+</div>
+}

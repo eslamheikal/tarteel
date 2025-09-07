@@ -1,0 +1,28 @@
+<div class="recording-card background-blur">
+  <div class="recording-header">
+    <h3 class="recording-title">{{ recording.title }}</h3>
+
+    <div class="recording-info-compact">
+      <div class="recording-details-compact">
+        <span class="detail-compact duration">⏱️ {{ recording.duration }}</span>
+        @if (recording.recitationType) {
+        <span class="detail-compact">🎵 {{ getRecitationTypeText(recording.recitationType) }}</span>
+        }
+        
+        <button class="action-button download-button" (click)="onDownloadClick()">
+          <i class="icon">⬇️</i>
+          <span>تحميل</span>
+        </button>
+        <button class="action-button share-button" (click)="onShareClick()">
+          <i class="icon">📤</i>
+          <span>مشاركة</span>
+        </button>
+        <button class="action-button select-button" (click)="onSelectClick()">
+          <i class="icon">🎵</i>
+          <span>تشغيل</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
