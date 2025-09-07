@@ -5,7 +5,7 @@
   </div>
 
   <div class="readers-grid" *ngIf="!isLoading && readers.length > 0">
-    <div class="reader-card" *ngFor="let reader of readers" (click)="goToReaderProfile(reader.id)">
+    <div class="reader-card" *ngFor="let reader of readers" (click)="goToReaderProfile(reader.uniqueUrl)">
       <div class="reader-image">
         <img [src]="'assets/img/readers/' + reader.imageUrl" 
              [alt]="reader.name" 
@@ -14,14 +14,6 @@
       </div>
       <div class="reader-info">
         <h3 class="reader-name">{{ reader.name }}</h3>
-        <div class="reader-meta" *ngIf="reader.experience">
-          <span class="experience">{{ reader.experience }}</span>
-        </div>
-        <div class="specializations" *ngIf="reader.specializations && reader.specializations.length > 0">
-          <span class="specialization-tag" *ngFor="let spec of reader.specializations.slice(0, 2)">
-            {{ spec }}
-          </span>
-        </div>
         <div class="recordings-count" *ngIf="reader.audioRecordings && reader.audioRecordings.length > 0">
           <i class="icon">🎵</i>
           <span>{{ reader.audioRecordings.length }} مقطع صوتي</span>

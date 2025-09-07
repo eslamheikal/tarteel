@@ -42,7 +42,7 @@ export class ReadersList implements OnInit {
     });
   }
 
-  goToReaderProfile(readerId: number): void {
-    this.router.navigate(['/profile', readerId]);
+  goToReaderProfile(uniqueUrl: string): void {
+    this.router.navigate(['/', uniqueUrl]);
   }
 }

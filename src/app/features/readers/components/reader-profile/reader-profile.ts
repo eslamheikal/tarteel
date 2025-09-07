@@ -17,6 +17,7 @@ export class ReaderProfile implements OnInit {
   audioRecordings: AudioRecording[] = [];
   selectedRecording: AudioRecording | null = null;
   isPlayerOpen = false;
+  isPlaying = false;
   isLoading = true;
   error: string | null = null;
 
@@ -27,18 +28,18 @@ export class ReaderProfile implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const readerId = +params['id'];
-      if (readerId) {
-        this.loadReaderProfile(readerId);
+      const uniqueUrl = params['uniqueUrl'];
+      if (uniqueUrl) {
+        this.loadReaderProfile(uniqueUrl);
       }
     });
   }
 
-  loadReaderProfile(readerId: number): void {
+  loadReaderProfile(uniqueUrl: string): void {
     this.isLoading = true;
     this.error = null;
 
-    this.readerService.getReaderById(readerId).subscribe({
+    this.readerService.getReader(uniqueUrl).subscribe({
       next: (reader) => {
         this.reader = reader;
         if (reader) {
@@ -55,8 +56,15 @@ export class ReaderProfile implements OnInit {
   }
 
   selectRecording(recording: AudioRecording): void {
-    this.selectedRecording = recording;
-    this.isPlayerOpen = true;
+    if (this.selectedRecording?.id === recording.id) {
+      // Same recording - toggle play/pause
+      this.isPlaying = !this.isPlaying;
+    } else {
+      // Different recording - start playing
+      this.selectedRecording = recording;
+      this.isPlaying = true;
+      this.isPlayerOpen = true;
+    }
   }
 
   isSelected(audioId: number): boolean {
@@ -66,6 +74,28 @@ export class ReaderProfile implements OnInit {
   closePlayer(): void {
     this.selectedRecording = null;
     this.isPlayerOpen = false;
+    this.isPlaying = false;
+  }
+
+  isPlayingRecording(recordingId: number): boolean {
+    return this.selectedRecording?.id === recordingId && this.isPlaying;
+  }
+
+  togglePlayPause(): void {
+    // If we're currently playing, stop playing
+    // If we're not playing, start playing
+    this.isPlaying = !this.isPlaying;
+  }
+
+  onPlaybackEnded(): void {
+    // When playback ends, stop playing and reset the state
+    this.isPlaying = false;
+  }
+
+  onSeekRequested(time: number): void {
+    // This method is called when user seeks to a specific time
+    // The actual seeking is handled by the fixed-recording-player
+    console.log('Seek requested to:', time);
   }
 
 }
