@@ -1,0 +1,397 @@
+.reader-profile-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px;
+  padding-top: 170px; // Space for header (70px) + fixed recording player (100px)
+  font-family: 'DINNextLTArabic-Regular', Arial, sans-serif;
+  direction: rtl;
+  text-align: right;
+}
+
+// Profile Header
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  color: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+  }
+}
+
+.profile-image {
+  flex-shrink: 0;
+}
+
+.reader-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 768px) {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+.profile-info {
+  flex: 1;
+}
+
+.reader-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
+}
+
+.reader-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+
+  .icon {
+    font-size: 1rem;
+  }
+}
+
+// Bio Section
+.bio-section {
+  margin-bottom: 25px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+  border-right: 3px solid #667eea;
+
+  h2 {
+    color: #333;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 8px;
+  }
+
+  .bio-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #555;
+    margin: 0;
+  }
+}
+
+// Specializations Section
+.specializations-section {
+  margin-bottom: 25px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+  border-right: 3px solid #764ba2;
+
+  h2 {
+    color: #333;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #764ba2;
+    padding-bottom: 8px;
+  }
+}
+
+.specializations-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.specialization-tag {
+  background: linear-gradient(135deg, #764ba2, #667eea);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  box-shadow: 0 2px 8px rgba(118, 75, 162, 0.3);
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+// Achievements Section
+.achievements-section {
+  margin-bottom: 25px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+  border-right: 3px solid #f093fb;
+
+  h2 {
+    color: #333;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #f093fb;
+    padding-bottom: 8px;
+  }
+}
+
+.achievements-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.achievement-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .icon {
+    font-size: 1.1rem;
+    color: #f093fb;
+  }
+}
+
+// Social Media Section
+.social-media-section {
+  margin-bottom: 25px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
+  border-right: 3px solid #4facfe;
+
+  h2 {
+    color: #333;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #4facfe;
+    padding-bottom: 8px;
+  }
+}
+
+.social-links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 15px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  &.youtube {
+    background: linear-gradient(135deg, #ff0000, #cc0000);
+    color: white;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 0, 0, 0.3);
+    }
+  }
+
+  &.facebook {
+    background: linear-gradient(135deg, #3b5998, #2d4373);
+    color: white;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(59, 89, 152, 0.3);
+    }
+  }
+
+  &.instagram {
+    background: linear-gradient(135deg, #e1306c, #fd1d1d, #fcb045);
+    color: white;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(225, 48, 108, 0.3);
+    }
+  }
+}
+
+// Audio Recordings Section
+.audio-recordings-section {
+  margin-bottom: 25px;
+
+  h2 {
+    color: #333;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 10px;
+  }
+}
+
+.recordings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+
+// No Recordings
+.no-recordings {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.no-recordings-content {
+  .icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    opacity: 0.5;
+  }
+
+  h3 {
+    color: #666;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: #999;
+    font-size: 1.1rem;
+  }
+}
+
+// Loading State
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Error State
+.error-container, .not-found-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.error-content, .not-found-content {
+  .icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    opacity: 0.7;
+  }
+
+  h3 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+}
+
+.retry-button {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .reader-profile-container {
+    padding: 10px;
+    padding-top: 150px; // Space for header (70px) + smaller fixed player (80px)
+  }
+
+  .profile-header {
+    padding: 15px;
+  }
+
+  .bio-section, .specializations-section, .achievements-section, .social-media-section {
+    padding: 15px;
+  }
+
+  .recordings-grid {
+    gap: 12px;
+  }
+}

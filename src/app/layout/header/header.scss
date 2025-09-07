@@ -1,0 +1,17 @@
+#header .logo {
+    margin-left: unset !important;
+}
+
+#header .logo h1 a,
+#header .logo h1 a:hover {
+    color: var(--primary-gold) !important;
+}
+
+@media (min-width: 992px) {
+    #header .nav-menu {
+        flex: 1;
+        justify-content: center;
+        text-align: center;
+        display: flex !important;
+    }
+}

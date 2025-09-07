@@ -6,47 +6,27 @@
         <div class="container">
 
             <div class="section-title aos-init aos-animate" data-aos="fade-up">
-                <h2>وقفات <strong> رمضانية</strong></h2>
+                <h2>احدث <strong> القراءات </strong></h2>
             </div>
 
             <div class="row" id="advices">
-                <div class="col-lg-4 col-md-6">
-                    <div class="icon-box aos-init aos-animate" data-aos="fade-up">
-                        <p class="description">وقفة مع قوله تعالى :{{ '{' }}.. وَمِمَّا رَزَقۡنَـٰهُمۡ یُنفِقُونَ {{ '}' }}
-                            <br> الحمد لله على نعمه ، والصلاة والسلام على سيد أنبيائه ورسله وبعد؛
-                            <br> فقد ختمت ست آيات بهذا الختام الجميل {{ '{' }}ومما رزقناهم ينفقون{{ '}' }}
-                            <br> وأول ما ينصرف إلى الذهن من المعاني أنها نفقة الأموال والزكوات والصدقات ، وهذا معنى صحيح
-                            بلا خلاف.
-                            <br> غير أنه يغيب عنا أنه يدخل فيه أيضا إنفاق العلم والوقت.
-                            <br> قال الحسن البصري رحمه الله: "من أعظم النفقة :نفقة العلم"
-                            <br> فيا أهل العلم والفضل ،احتسبوا نشر العلم ، وهداية الخلق للحق من النفقات العظيمة ،
-                            والقربات الجليلة، نسأل الله ألا يحرمنا شرف تبليع العلم بحق ، وهداية الخلق إليه بإخلاص وصدق.
-                            <br> والحمد لله رب العالمين.
-                        </p>
-                        <div class="icon">وقفة</div>
+
+                <!-- @for (advice of advices; track advice.id) { 
+                    <div class="col-lg-4 col-md-6">
+                        <card-item [title]="advice.title">
+                            <div class="description">
+                                <p>" {{ advice.description }} "</p>
+
+                                <p class="author">{{ advice.author }}</p>
+                            </div>
+                        </card-item>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="icon-box aos-init aos-animate" data-aos="fade-up">
-                        <p class="description">" شَهْرُ رَمَضَانَ الَّذِيَ أُنزِلَ فِيهِ الْقُرْآنُ هُدًى لِّلنَّاسِ
-                            وَبَيِّنَاتٍ مِّنَ الْهُدَى وَالْفُرْقَانِ فَمَن شَهِدَ مِنكُمُ الشَّهْرَ فَلْيَصُمْهُ وَمَن
-                            كَانَ مَرِيضًا أَوْ عَلَى سَفَرٍ فَعِدَّةٌ مِّنْ أَيَّامٍ أُخَرَ يُرِيدُ اللَّهُ بِكُمُ
-                            الْيُسْرَ وَلاَ يُرِيدُ بِكُمُ الْعُسْرَ وَلِتُكْمِلُواْ الْعِدَّةَ وَلِتُكَبِّرُواْ اللَّهَ
-                            عَلَى مَا هَدَاكُمْ وَلَعَلَّكُمْ تَشْكُرُونَ " <sub>سورة البقرة</sub></p>
-                        <div class="icon">ايه</div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="icon-box aos-init" data-aos="fade-up">
-                        <p class="description">" إذا جاء شهر رمضان فُتحت أبواب الجنة، وغُلِّقَتْ أبواب جهنم، وسُلْسِلَت
-                            الشياطين "</p>
-                        <div class="icon">حديث</div>
-                    </div>
-                </div>
+                } -->
+
             </div>
 
             <div class="text-center aos-init" data-aos="fade-up">
-                <a href="./advices-text.html" id="more-advices-btn">المزيد</a>
+                <a [routerLink]="['/advices']" id="more-advices-btn">المزيد</a>
             </div>
         </div>
     </section>
