@@ -1,0 +1,74 @@
+<form [formGroup]="formGroup" class="reader-info-form background-blur">
+  <div class="form-section">
+    <h2>بيانات القارئ</h2>
+
+    <div class="form-row mb-0">
+      <div class="form-group">
+        <label for="name">اسم القارئ *</label>
+        <input type="text" id="name" formControlName="name" placeholder="أدخل اسم القارئ"
+          [class.error]="isFieldInvalid('name')" class="form-input background-blur" autocomplete="off">
+        @if (isFieldInvalid('name')) {
+        <span class="text-danger">{{ getFieldError('name') }}</span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="uniqueUrl">الرابط المميز *</label>
+        <input type="text" id="uniqueUrl" formControlName="uniqueUrl" placeholder="مثال: mohamed-mabrouk"
+          [class.error]="isFieldInvalid('uniqueUrl')" class="form-input background-blur" autocomplete="off">
+        @if (isFieldInvalid('uniqueUrl')) {
+        <span class="text-danger">{{ getFieldError('uniqueUrl') }}</span>
+        }
+        <small class="form-hint">يجب أن يحتوي على أحرف إنجليزية</small>
+      </div>
+    </div>
+
+    <div class="form-group mb-1">
+      <label for="bio">نبذة عن القارئ</label>
+      <textarea id="bio" formControlName="bio" placeholder="اكتب نبذة مختصرة عن القارئ..."
+        [class.error]="isFieldInvalid('bio')" class="form-textarea background-blur" rows="4"
+        autocomplete="off"></textarea>
+      @if (isFieldInvalid('bio')) {
+      <span class="text-danger">{{ getFieldError('bio') }}</span>
+      }
+      <small class="form-hint">الحد الأقصى 500 حرف</small>
+    </div>
+
+    <div class="form-group mb-1">
+      <label for="imageUrl">رابط الصورة *</label>
+      <input type="text" id="imageUrl" formControlName="imageUrl" placeholder="مثال: mohamed-mabrouk.jpg"
+        [class.error]="isFieldInvalid('imageUrl')" class="form-input background-blur" autocomplete="off">
+      @if (isFieldInvalid('imageUrl')) {
+      <span class="text-danger">{{ getFieldError('imageUrl') }}</span>
+      }
+    </div>
+
+    <div class="form-group mb-1">
+      <label for="facebook">فيسبوك</label>
+      <input type="url" id="facebook" formControlName="facebook" placeholder="https://facebook.com/username"
+        [class.error]="isFieldInvalid('facebook')" class="form-input background-blur" autocomplete="off">
+      @if (isFieldInvalid('facebook')) {
+      <span class="text-danger">{{ getFieldError('facebook') }}</span>
+      }
+    </div>
+
+    <div class="form-group mb-1">
+      <label for="youtube">يوتيوب</label>
+      <input type="url" id="youtube" formControlName="youtube" placeholder="https://youtube.com/@username"
+        [class.error]="isFieldInvalid('youtube')" class="form-input background-blur" autocomplete="off">
+      @if (isFieldInvalid('youtube')) {
+      <span class="text-danger">{{ getFieldError('youtube') }}</span>
+      }
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button type="button" (click)="onCancel()" class="btn btn-secondary">
+        إلغاء
+      </button>
+      <button type="button" (click)="onSubmit()" [disabled]="formGroup.invalid" class="btn btn-primary">
+        حفظ 
+      </button>
+    </div>
+  </div>
+</form>

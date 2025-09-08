@@ -5,10 +5,11 @@ import { Reader, AudioRecording } from '../../../../core/models/reader.model';
 import { ReaderService } from '../../../../core/services/reader.service';
 import { RecordingCard } from '../../../shared/components/recording-card/recording-card';
 import { FixedRecordingPlayer } from '../../../shared/components/fixed-recording-player/fixed-recording-player';
+import { NotFound } from "../../../shared/components/not-found/not-found";
 
 @Component({
   selector: 'app-reader-profile',
-  imports: [CommonModule, RecordingCard, FixedRecordingPlayer],
+  imports: [CommonModule, RecordingCard, FixedRecordingPlayer, NotFound],
   templateUrl: './reader-profile.html',
   styleUrl: './reader-profile.scss'
 })

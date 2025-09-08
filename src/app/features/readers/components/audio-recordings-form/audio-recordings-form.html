@@ -1,0 +1,54 @@
+<div class="audio-recordings-form background-blur">
+  <div class="form-section">
+    <div class="section-header">
+      <h2>التسجيلات الصوتية</h2>
+      <button type="button" (click)="openAddPopup()" class="add-button">
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+          </path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Recordings List -->
+    <div class="recordings-list">
+      @if (audioRecordings.length === 0) {
+      <div class="empty-state">
+        <p>لا توجد تسجيلات صوتية</p>
+        <button type="button" (click)="openAddPopup()" class="btn btn-primary">
+          إضافة تسجيل جديد
+        </button>
+      </div>
+      } @else {
+      @for (recording of audioRecordings; track recording.id || $index) {
+      <app-audio-recording-display-card 
+        [recording]="recording" 
+        [index]="$index"
+        (edit)="openEditPopup($event)"
+        (delete)="removeAudioRecording($event)"
+        (play)="onPlayRecording($event)">
+      </app-audio-recording-display-card>
+      }
+      }
+    </div>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+      <button type="button" (click)="onCancel()" class="btn btn-secondary">
+        إلغاء
+      </button>
+      <button type="button" (click)="onSubmit()" class="btn btn-primary">
+        حفظ
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Popup for Add/Edit - Outside the main container -->
+<app-audio-recording-popup 
+  [isOpen]="isPopupOpen"
+  [editingRecording]="editingRecording"
+  (close)="closePopup()"
+  (save)="onSaveRecording($event)">
+</app-audio-recording-popup>

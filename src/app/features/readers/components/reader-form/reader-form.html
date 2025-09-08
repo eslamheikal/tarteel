@@ -1,0 +1,46 @@
+<div class="reader-form-container">
+
+  <!-- Success Message -->
+  @if (success) {
+  <div class="success-message">
+    <div class="success-content">
+      <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+      </svg>
+      <h3>تم إضافة القارئ بنجاح!</h3>
+      <p>سيتم توجيهك إلى صفحة القراء خلال لحظات...</p>
+    </div>
+  </div>
+  }
+
+  <!-- Loading State -->
+  <loading-spinner *ngIf="isSubmitting" [isLoading]="isSubmitting" [message]="'جاري إضافة القارئ...'" />
+
+  <!-- Error State -->
+  <error-state *ngIf="error" [error]="error" />
+
+  <!-- Forms Container -->
+  @if (!isSubmitting && !success) {
+  <div class="forms-container">
+
+    <div class="row">
+
+      <div class="col-12 col-md-6">
+        <!-- Personal Information Form -->
+        <app-reader-info-form [initialData]="readerData" (formSubmit)="onReaderInfoSubmit($event)"
+          (formCancel)="onReaderInfoCancel()">
+        </app-reader-info-form>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <!-- Audio Recordings Form -->
+        <app-audio-recordings-form [initialData]="audioRecordingsData" (formSubmit)="onAudioRecordingsSubmit($event)"
+          (formCancel)="onAudioRecordingsCancel()">
+        </app-audio-recordings-form>
+      </div>
+
+    </div>
+
+  </div>
+  }
+</div>

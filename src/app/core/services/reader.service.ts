@@ -20,20 +20,18 @@ export class ReaderService {
                     title: 'الاعراف',
                     audioUrl: 'assets/audio/mohamed-mabrouk-a3raf.mp3',
                     duration: '04:12',
-                    recitationType: 'murattal'
+                    recitationType: 'tellawa'
                 },
                 {
                     id: 2,
                     title: 'الانعام',
                     audioUrl: 'assets/audio/mohamed-mabrouk-for2an.mp3',
                     duration: '05:34',
-                    recitationType: 'murattal'
+                    recitationType: 'tellawa'
                 }
             ],
-            socialMedia: {
-                youtube: 'https://youtube.com/@mohamedmabrouk',
-                facebook: 'https://facebook.com/mohamedmabrouk'
-            }
+            youtube: 'https://youtube.com/@mohamedmabrouk',
+            facebook: 'https://facebook.com/mohamedmabrouk'
         },
         {
             id: 6,
@@ -47,20 +45,18 @@ export class ReaderService {
                     title: 'الاعراف',
                     audioUrl: 'assets/audio/mohamed-mabrouk-a3raf.mp3',
                     duration: '04:12',
-                    recitationType: 'murattal'
+                    recitationType: 'tellawa'
                 },
                 {
                     id: 2,
                     title: 'الانعام',
                     audioUrl: 'assets/audio/mohamed-mabrouk-for2an.mp3',
                     duration: '05:34',
-                    recitationType: 'murattal'
+                    recitationType: 'tellawa'
                 }
             ],
-            socialMedia: {
-                youtube: 'https://youtube.com/@yousefata',
-                facebook: 'https://facebook.com/yousefata'
-            }
+            youtube: 'https://youtube.com/@yousefata',
+            facebook: 'https://facebook.com/yousefata'
         },
         {
             id: 9,
@@ -74,20 +70,18 @@ export class ReaderService {
                     title: 'الاعراف',
                     audioUrl: 'assets/audio/mohamed-mabrouk-a3raf.mp3',
                     duration: '04:12',
-                    recitationType: 'murattal'
+                    recitationType: 'tellawa'
                 },
                 {
                     id: 2,
                     title: 'الانعام',
                     audioUrl: 'assets/audio/mohamed-mabrouk-for2an.mp3',
                     duration: '05:34',
-                    recitationType: 'murattal'
+                    recitationType: 'tellawa'
                 }
             ],
-            socialMedia: {
-                youtube: 'https://youtube.com/@abdallahmedhat',
-                facebook: 'https://facebook.com/abdallahmedhat'
-            }
+            youtube: 'https://youtube.com/@abdallahmedhat',
+            facebook: 'https://facebook.com/abdallahmedhat'
         },
         {
             id: 10,
@@ -101,20 +95,18 @@ export class ReaderService {
                     title: 'الاعراف',
                     audioUrl: 'assets/audio/mohamed-mabrouk-a3raf.mp3',
                     duration: '04:12',
-                    recitationType: 'murattal'
+                    recitationType: 'tellawa'
                 },
                 {
                     id: 2,
                     title: 'الانعام',
                     audioUrl: 'assets/audio/mohamed-mabrouk-for2an.mp3',
                     duration: '05:34',
-                    recitationType: 'murattal'
+                    recitationType: 'tellawa'
                 }
             ],
-            socialMedia: {
-                youtube: 'https://youtube.com/@anassho3rofi',
-                facebook: 'https://facebook.com/anassho3rofi'
-            }
+            youtube: 'https://youtube.com/@anassho3rofi',
+            facebook: 'https://facebook.com/anassho3rofi'
         }
     ];
 

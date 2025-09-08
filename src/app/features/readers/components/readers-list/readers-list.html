@@ -1,16 +1,24 @@
 <div class="readers-list-container">
   <div class="page-header">
     <h1>القراء</h1>
-    <div class="search-container">
-      <div class="search-input-wrapper">
-        <input 
-          type="text" 
-          [(ngModel)]="searchTerm" 
-          (input)="onSearch()"
-          placeholder="ابحث عن قارئ..."
-          class="search-input background-blur"
-        >
+    <div class="header-actions">
+      <div class="search-container">
+        <div class="search-input-wrapper">
+          <input 
+            type="text" 
+            [(ngModel)]="searchTerm" 
+            (input)="onSearch()"
+            placeholder="ابحث عن قارئ..."
+            class="search-input background-blur"
+          >
+        </div>
       </div>
+      <button class="add-reader-btn" (click)="goToAddReader()">
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+        </svg>
+        إضافة قارئ
+      </button>
     </div>
   </div>
 

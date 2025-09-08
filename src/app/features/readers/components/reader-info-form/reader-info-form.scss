@@ -1,0 +1,22 @@
+// Reader Info Form Styles
+.reader-info-form {
+  border-radius: 16px;
+  padding: .75rem 1.25rem;
+  border: 1px solid var(--secondary-color);
+
+  .form-section {
+    h2 {
+      border-bottom: 2px solid rgba(191, 161, 97, 0.4);
+      padding-bottom: 15px;
+      color: var(--primary-gold);
+      font-size: 1.25rem;
+      font-weight: 500;
+    }
+  }
+
+  .mb-1 {
+    margin-bottom: 1rem;
+  }
+
+}
+
