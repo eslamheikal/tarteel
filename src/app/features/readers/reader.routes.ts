@@ -8,7 +8,7 @@ export const READER_ROUTES: Routes = [
         component: ReadersList
     },
     {
-        path: 'profile/:id',
+        path: ':uniqueUrl',
         component: ReaderProfile
     }
 ];

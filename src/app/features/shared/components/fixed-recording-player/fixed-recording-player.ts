@@ -1,23 +1,26 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AudioRecording } from '../../../../core/models/reader.model';
+import { DownloadButton } from '../download-button/download-button';
+import { ShareButton, ShareData } from '../share-button/share-button';
 
 @Component({
   selector: 'app-fixed-recording-player',
-  imports: [CommonModule],
+  imports: [CommonModule, DownloadButton, ShareButton],
   templateUrl: './fixed-recording-player.html',
   styleUrl: './fixed-recording-player.scss'
 })
 export class FixedRecordingPlayer implements OnInit, OnDestroy, OnChanges {
   @Input() recording: AudioRecording | null = null;
   @Input() isVisible: boolean = false;
+  @Input() isPlaying: boolean = false;
   @Output() closeRequested = new EventEmitter<void>();
   @Output() playPauseRequested = new EventEmitter<void>();
+  @Output() playbackEnded = new EventEmitter<void>();
   @Output() volumeChangeRequested = new EventEmitter<number>();
   @Output() seekRequested = new EventEmitter<number>();
 
   // Audio state
-  isPlaying: boolean = false;
   currentTime: number = 0;
   totalTime: number = 0;
   volume: number = 100;
@@ -26,35 +29,48 @@ export class FixedRecordingPlayer implements OnInit, OnDestroy, OnChanges {
   showVolumeSlider: boolean = false;
 
   private audio: HTMLAudioElement | null = null;
+  private audioEventHandlers: { [key: string]: () => void } = {};
 
   ngOnInit(): void {
-    if (this.recording) {
-      this.initializeAudio();
-    }
+    // Audio will be initialized in ngOnChanges when recording is available
   }
 
-  ngOnChanges(): void {
-    if (this.recording && this.isVisible) {
+  ngOnChanges(changes: SimpleChanges): void {
+    // Handle recording changes
+    if (changes['recording'] && this.recording && this.isVisible) {
       this.initializeAudio();
-      // Auto-play when player becomes visible
-      setTimeout(() => {
-        if (this.audio && !this.isPlaying) {
-          this.audio.play().catch(error => {
-            console.log('Auto-play was prevented by browser:', error);
-            // Browser prevented auto-play, user will need to click play manually
-          });
-        }
-      }, 100);
-    } else if (!this.isVisible && this.audio) {
-      // Pause audio when player is hidden
-      this.audio.pause();
-      this.isPlaying = false;
+    }
+    
+    // Handle visibility changes
+    if (changes['isVisible']) {
+      if (this.isVisible && this.recording && !this.audio) {
+        this.initializeAudio();
+      } else if (!this.isVisible && this.audio) {
+        // Pause audio when player is hidden
+        this.audio.pause();
+      }
+    }
+
+    // Handle isPlaying changes
+    if (changes['isPlaying'] && this.audio) {
+      if (this.isPlaying) {
+        this.audio.play().catch(error => {
+          console.log('Play was prevented:', error);
+        });
+      } else {
+        this.audio.pause();
+      }
     }
   }
 
   ngOnDestroy(): void {
     if (this.audio) {
       this.audio.pause();
+      // Remove all event listeners
+      Object.keys(this.audioEventHandlers).forEach(eventType => {
+        this.audio?.removeEventListener(eventType, this.audioEventHandlers[eventType]);
+      });
+      this.audioEventHandlers = {};
       this.audio = null;
     }
   }
@@ -62,38 +78,74 @@ export class FixedRecordingPlayer implements OnInit, OnDestroy, OnChanges {
   private initializeAudio(): void {
     if (!this.recording) return;
 
+    // Stop and cleanup previous audio if exists
+    if (this.audio) {
+      this.audio.pause();
+      // Remove all event listeners
+      Object.keys(this.audioEventHandlers).forEach(eventType => {
+        this.audio?.removeEventListener(eventType, this.audioEventHandlers[eventType]);
+      });
+      this.audioEventHandlers = {};
+      this.audio = null;
+    }
+
     this.audio = new Audio();
     this.audio.src = this.recording.audioUrl;
     this.audio.volume = this.volume / 100;
 
-    this.audio.addEventListener('loadedmetadata', () => {
+    // Create event handlers
+    this.audioEventHandlers['loadedmetadata'] = () => {
       this.totalTime = this.audio?.duration || 0;
-    });
+    };
 
-    this.audio.addEventListener('timeupdate', () => {
+    this.audioEventHandlers['timeupdate'] = () => {
       this.currentTime = this.audio?.currentTime || 0;
-    });
+    };
 
-    this.audio.addEventListener('ended', () => {
+    this.audioEventHandlers['ended'] = () => {
       if (this.repeatMode === 'repeat') {
         // Repeat current track
         if (this.audio) {
           this.audio.currentTime = 0;
+          this.currentTime = 0; // Reset progress bar
           this.audio.play();
         }
       } else {
-        // No repeat
-        this.isPlaying = false;
+        // No repeat - reset progress bar and notify parent that playback ended
+        this.currentTime = 0; // Reset progress bar to beginning
+        this.playbackEnded.emit();
       }
+    };
+
+    this.audioEventHandlers['play'] = () => {
+      // Audio started playing - notify parent
+      if (!this.isPlaying) {
+        this.playPauseRequested.emit();
+      }
+    };
+
+    this.audioEventHandlers['pause'] = () => {
+      // Audio paused - notify parent
+      if (this.isPlaying) {
+        this.playPauseRequested.emit();
+      }
+    };
+
+    // Add event listeners
+    Object.keys(this.audioEventHandlers).forEach(eventType => {
+      this.audio?.addEventListener(eventType, this.audioEventHandlers[eventType]);
     });
 
-    this.audio.addEventListener('play', () => {
-      this.isPlaying = true;
-    });
-
-    this.audio.addEventListener('pause', () => {
-      this.isPlaying = false;
-    });
+    // Auto-play if isPlaying is true
+    if (this.isPlaying) {
+      setTimeout(() => {
+        if (this.audio) {
+          this.audio.play().catch(error => {
+            console.log('Auto-play was prevented:', error);
+          });
+        }
+      }, 100);
+    }
   }
 
   onClose(): void {
@@ -104,13 +156,6 @@ export class FixedRecordingPlayer implements OnInit, OnDestroy, OnChanges {
   }
 
   togglePlayPause(): void {
-    if (!this.audio) return;
-
-    if (this.isPlaying) {
-      this.audio.pause();
-    } else {
-      this.audio.play();
-    }
     this.playPauseRequested.emit();
   }
 
@@ -169,6 +214,7 @@ export class FixedRecordingPlayer implements OnInit, OnDestroy, OnChanges {
     const newTime = percentage * this.totalTime;
 
     this.audio.currentTime = newTime;
+    this.currentTime = newTime; // Update currentTime immediately
     this.seekRequested.emit(newTime);
   }
 
@@ -196,49 +242,13 @@ export class FixedRecordingPlayer implements OnInit, OnDestroy, OnChanges {
     return types[type] || type;
   }
 
-  downloadRecording(): void {
-    if (!this.recording?.audioUrl) return;
-
-    // Create a temporary link element to trigger download
-    const link = document.createElement('a');
-    link.href = this.recording.audioUrl;
-    link.download = `${this.recording.title}.mp3`;
-    link.target = '_blank';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-
-  shareRecording(): void {
-    if (!this.recording) return;
-
-    const shareData = {
+  get shareData(): ShareData | null {
+    if (!this.recording) return null;
+    
+    return {
       title: this.recording.title,
       text: `استمع إلى: ${this.recording.title}`,
       url: window.location.href
     };
-
-    if (navigator.share) {
-      // Use native share API if available
-      navigator.share(shareData).catch(error => {
-        console.log('Error sharing:', error);
-        this.fallbackShare();
-      });
-    } else {
-      // Fallback to copying URL to clipboard
-      this.fallbackShare();
-    }
-  }
-
-  private fallbackShare(): void {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(window.location.href).then(() => {
-        alert('تم نسخ رابط التسجيل إلى الحافظة');
-      }).catch(() => {
-        alert('رابط التسجيل: ' + window.location.href);
-      });
-    } else {
-      alert('رابط التسجيل: ' + window.location.href);
-    }
   }
 }

@@ -1,6 +1,6 @@
 .fixed-recording-player {
   position: fixed;
-  top: 70px; // Under the main header (header height is 70px)
+  top: var(--header-height); // Under the main header (header height is 70px)
   left: 0;
   right: 0;
   background: linear-gradient(90deg, rgba(38, 89, 84, 0.8) 0%, rgba(191, 161, 97, 0.8) 100%);
@@ -416,20 +416,24 @@
     order: 1;
     flex: 1 1 100%;
     margin-right: 0;
-    margin-bottom: 8px;
+    margin-bottom: 2px;
+
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
   }
 
   .play-section {
-    order: 2;
+    order: 3;
   }
 
   .progress-section {
-    order: 3;
+    order: 2;
     flex: 1;
     margin: 0 8px;
   }
 
   .volume-section {
-    order: 4;
+    order: 1;
   }
 }

@@ -1,26 +1,51 @@
 <div class="recording-card background-blur">
   <div class="recording-header">
-    <h3 class="recording-title">{{ recording.title }}</h3>
+    <div class="title-section">
+      <h3 class="recording-title">{{ recording.title }}</h3>
+
+      <button class="play-icon-button" [class.playing]="isPlaying" (click)="onSelectClick()"
+        [title]="isPlaying ? 'إيقاف ' + recording.title : 'تشغيل ' + recording.title">
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <!-- Play Icon -->
+          <path *ngIf="!isPlaying" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5v14l11-7z" />
+
+          <!-- Pause Icon -->
+          <g *ngIf="isPlaying">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4v16H6z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 4h4v16h-4z" />
+          </g>
+        </svg>
+      </button>
+    </div>
 
     <div class="recording-info-compact">
       <div class="recording-details-compact">
-        <span class="detail-compact duration">⏱️ {{ recording.duration }}</span>
-        @if (recording.recitationType) {
-        <span class="detail-compact">🎵 {{ getRecitationTypeText(recording.recitationType) }}</span>
-        }
-        
-        <button class="action-button download-button" (click)="onDownloadClick()">
-          <i class="icon">⬇️</i>
-          <span>تحميل</span>
-        </button>
-        <button class="action-button share-button" (click)="onShareClick()">
-          <i class="icon">📤</i>
-          <span>مشاركة</span>
-        </button>
-        <button class="action-button select-button" (click)="onSelectClick()">
-          <i class="icon">🎵</i>
-          <span>تشغيل</span>
-        </button>
+        <div class="details-group">
+          <span class="detail-compact duration">
+            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            {{ recording.duration }}
+          </span>
+          @if (recording.recitationType) {
+          <span class="detail-compact">
+            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+            </svg>
+            {{ getRecitationTypeText(recording.recitationType) }}
+          </span>
+          }
+        </div>
+
+        <div class="buttons-group">
+          <app-download-button [downloadUrl]="recording.audioUrl" [fileName]="recording.title + '.mp3'"
+            [title]="'تحميل ' + recording.title">
+          </app-download-button>
+          <app-share-button [shareData]="shareData" [title]="'مشاركة ' + recording.title">
+          </app-share-button>
+        </div>
       </div>
     </div>
 
