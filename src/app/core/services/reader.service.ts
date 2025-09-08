@@ -1,11 +1,14 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Reader, AudioRecording } from '../models/reader.model';
+import { ConfigService } from './config.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ReaderService {
+
+    private configService: ConfigService = inject(ConfigService);
 
     private readers: Reader[] = [
         {
@@ -18,14 +21,14 @@ export class ReaderService {
                 {
                     id: 1,
                     title: 'الاعراف',
-                    audioUrl: 'assets/audio/mohamed-mabrouk-a3raf.mp3',
+                    audioUrl: this.configService.getAudioUrl('mohamed-mabrouk-a3raf'),
                     duration: '04:12',
                     recitationType: 'murattal'
                 },
                 {
                     id: 2,
                     title: 'الانعام',
-                    audioUrl: 'assets/audio/mohamed-mabrouk-for2an.mp3',
+                    audioUrl: this.configService.getAudioUrl('mohamed-mabrouk-a3raf'),
                     duration: '05:34',
                     recitationType: 'murattal'
                 }
@@ -45,14 +48,14 @@ export class ReaderService {
                 {
                     id: 1,
                     title: 'الاعراف',
-                    audioUrl: 'assets/audio/mohamed-mabrouk-a3raf.mp3',
+                    audioUrl: this.configService.getAudioUrl('الاعراف'),
                     duration: '04:12',
                     recitationType: 'murattal'
                 },
                 {
                     id: 2,
                     title: 'الانعام',
-                    audioUrl: 'assets/audio/mohamed-mabrouk-for2an.mp3',
+                    audioUrl: this.configService.getAudioUrl('الانعام'),
                     duration: '05:34',
                     recitationType: 'murattal'
                 }
@@ -72,14 +75,14 @@ export class ReaderService {
                 {
                     id: 1,
                     title: 'الاعراف',
-                    audioUrl: 'assets/audio/mohamed-mabrouk-a3raf.mp3',
+                    audioUrl: this.configService.getAudioUrl('الاعراف'),
                     duration: '04:12',
                     recitationType: 'murattal'
                 },
                 {
                     id: 2,
                     title: 'الانعام',
-                    audioUrl: 'assets/audio/mohamed-mabrouk-for2an.mp3',
+                    audioUrl: this.configService.getAudioUrl('الانعام'),
                     duration: '05:34',
                     recitationType: 'murattal'
                 }
@@ -99,14 +102,14 @@ export class ReaderService {
                 {
                     id: 1,
                     title: 'الاعراف',
-                    audioUrl: 'assets/audio/mohamed-mabrouk-a3raf.mp3',
+                    audioUrl: this.configService.getAudioUrl('الاعراف'),
                     duration: '04:12',
                     recitationType: 'murattal'
                 },
                 {
                     id: 2,
                     title: 'الانعام',
-                    audioUrl: 'assets/audio/mohamed-mabrouk-for2an.mp3',
+                    audioUrl: this.configService.getAudioUrl('الانعام'),
                     duration: '05:34',
                     recitationType: 'murattal'
                 }
