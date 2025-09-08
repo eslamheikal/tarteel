@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -9,4 +10,9 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class Header {
 
+  appName: string;
+
+  constructor() {
+    this.appName = environment.appName;
+  }
 }
