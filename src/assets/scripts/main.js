@@ -308,7 +308,7 @@
     // Initialize other components
     initSmoothScroll();
     initHeaderScroll();
-    initStickyHeader();
+    // initStickyHeader();
     initBackToTop();
     initHeroCarousel();
     initPortfolioCarousel();

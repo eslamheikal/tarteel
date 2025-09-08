@@ -1,6 +1,6 @@
 .fixed-recording-player {
   position: fixed;
-  top: 70px; // Under the main header (header height is 70px)
+  top: var(--header-height); // Under the main header (header height is 70px)
   left: 0;
   right: 0;
   background: linear-gradient(90deg, rgba(38, 89, 84, 0.8) 0%, rgba(191, 161, 97, 0.8) 100%);

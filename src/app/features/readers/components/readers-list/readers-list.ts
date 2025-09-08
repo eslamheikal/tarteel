@@ -1,17 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Reader } from '../../../../core/models/reader.model';
 import { ReaderService } from '../../../../core/services/reader.service';
+import { ErrorState } from "../../../shared/components/error-state/error-state";
+import { LoadingSpinner } from "../../../shared/components/loading-spinner/loading-spinner";
+import { NoResults } from "../../../shared/components/no-results/no-results";
 
 @Component({
   selector: 'app-readers-list',
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule, ErrorState, LoadingSpinner, NoResults],
   templateUrl: './readers-list.html',
   styleUrl: './readers-list.scss'
 })
 export class ReadersList implements OnInit {
   readers: Reader[] = [];
+  filteredReaders: Reader[] = [];
+  searchTerm: string = '';
   isLoading = true;
   error: string | null = null;
 
@@ -32,6 +38,7 @@ export class ReadersList implements OnInit {
       next: (readers) => {
         // Filter out readers with id 0 (غير متوفر)
         this.readers = readers.filter(reader => reader.id !== 0);
+        this.filteredReaders = [...this.readers];
         this.isLoading = false;
       },
       error: (error) => {
@@ -44,5 +51,22 @@ export class ReadersList implements OnInit {
 
   goToReaderProfile(uniqueUrl: string): void {
     this.router.navigate(['/', uniqueUrl]);
+  }
+
+  onSearch(): void {
+    if (!this.searchTerm.trim()) {
+      this.filteredReaders = [...this.readers];
+      return;
+    }
+
+    const searchLower = this.searchTerm.toLowerCase().trim();
+    this.filteredReaders = this.readers.filter(reader => 
+      reader.name.toLowerCase().includes(searchLower)
+    );
+  }
+
+  clearSearch(): void {
+    this.searchTerm = '';
+    this.filteredReaders = [...this.readers];
   }
 }

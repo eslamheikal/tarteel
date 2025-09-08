@@ -1,7 +1,19 @@
-@media  (min-width: 991px) {
+// Sticky footer layout
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.page-content {
+    flex: 1;
+    margin-top: var(--header-height);
+}
+
+@media (min-width: 991px) {
 
     .page-content {
         // margin-top: 70px;
     }
-    
+
 }

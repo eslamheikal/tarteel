@@ -1,55 +1,42 @@
 <div class="readers-list-container">
   <div class="page-header">
-    <h1>قائمة القراء</h1>
-    <p>اختر قارئاً للاستماع إلى تلاوته</p>
+    <h1>القراء</h1>
+    <div class="search-container">
+      <div class="search-input-wrapper">
+        <input 
+          type="text" 
+          [(ngModel)]="searchTerm" 
+          (input)="onSearch()"
+          placeholder="ابحث عن قارئ..."
+          class="search-input background-blur"
+        >
+      </div>
+    </div>
   </div>
 
-  <div class="readers-grid" *ngIf="!isLoading && readers.length > 0">
-    <div class="reader-card" *ngFor="let reader of readers" (click)="goToReaderProfile(reader.uniqueUrl)">
+  <div class="readers-grid" *ngIf="!isLoading && filteredReaders.length > 0">
+    <div class="reader-card background-blur" *ngFor="let reader of filteredReaders" (click)="goToReaderProfile(reader.uniqueUrl)">
       <div class="reader-image">
-        <img [src]="'assets/img/readers/' + reader.imageUrl" 
-             [alt]="reader.name" 
-             class="reader-photo"
-             onerror="this.src='assets/img/readers/default-reader.png'">
+        <img [src]="'assets/img/readers/' + reader.imageUrl" [alt]="reader.name" class="reader-photo"
+          onerror="this.src='assets/img/readers/default-reader.png'">
       </div>
-      <div class="reader-info">
-        <h3 class="reader-name">{{ reader.name }}</h3>
-        <div class="recordings-count" *ngIf="reader.audioRecordings && reader.audioRecordings.length > 0">
-          <i class="icon">🎵</i>
-          <span>{{ reader.audioRecordings.length }} مقطع صوتي</span>
-        </div>
-      </div>
-      <div class="card-overlay">
-        <i class="icon">👁️</i>
-        <span>عرض الملف الشخصي</span>
-      </div>
+      <h3 class="reader-name">{{ reader.name }}</h3>
     </div>
   </div>
 
-  <!-- Loading State -->
-  <div class="loading-container" *ngIf="isLoading">
-    <div class="loading-spinner"></div>
-    <p>جاري تحميل قائمة القراء...</p>
-  </div>
 
-  <!-- Error State -->
-  <div class="error-container" *ngIf="error">
-    <div class="error-content">
-      <i class="icon">⚠️</i>
-      <h3>حدث خطأ</h3>
-      <p>{{ error }}</p>
-      <button class="retry-button" (click)="loadReaders()">
-        إعادة المحاولة
-      </button>
-    </div>
-  </div>
+  <loading-spinner *ngIf="isLoading" [isLoading]="isLoading" [message]="'جاري تحميل قائمة القراء...'" />
+
+  <error-state *ngIf="error" [error]="error" (retryFunction)="loadReaders()" />
+
+  <no-results *ngIf="!isLoading && !error && searchTerm.length > 0 && filteredReaders.length === 0" (clearSearchClicked)="clearSearch()" />
 
   <!-- No Readers State -->
-  <div class="no-readers" *ngIf="!isLoading && !error && readers.length === 0">
+  <div class="no-readers background-blur" *ngIf="!isLoading && !error && readers.length == 0">
     <div class="no-readers-content">
-      <i class="icon">👥</i>
+      <i class="icon"></i>
       <h3>لا توجد قراء متاحين</h3>
-      <p>لم يتم العثور على أي قراء في النظام</p>
     </div>
   </div>
+  
 </div>

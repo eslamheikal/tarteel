@@ -5,6 +5,7 @@
   --primary-color: #265954;
   --secondary-color: #b9b9b9;
   --primary-gold: #bfa161;
+  --header-height: 60px;
 }
 
 /*--------------------------------------------------------------
@@ -94,7 +95,7 @@ h6 {
   top: 0;
   left: 0;
   right: 0;
-  height: 70px;
+  height: var(--header-height);
   transition: all 0.5s;
   z-index: 997;
   padding: 10px 0;
@@ -939,4 +940,9 @@ section {
   backdrop-filter: blur(10px) !important;
   -webkit-backdrop-filter: blur(10px) !important;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+
+.mobile-nav-toggle{
+  display: none !important;
 }
