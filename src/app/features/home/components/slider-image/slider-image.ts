@@ -1,11 +1,12 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { StandardButtonComponent } from '../../../shared/components/standard-button/standard-button.component';
 
 declare var $: any;
 
 @Component({
   selector: 'app-slider-image',
-  imports: [RouterLink],
+  imports: [RouterLink, StandardButtonComponent],
   templateUrl: './slider-image.html',
   styleUrl: './slider-image.scss'
 })

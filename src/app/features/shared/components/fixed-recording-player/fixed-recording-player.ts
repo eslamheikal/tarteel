@@ -233,8 +233,8 @@ export class FixedRecordingPlayer implements OnInit, OnDestroy, OnChanges {
 
   getRecitationTypeText(type: string): string {
     const types: { [key: string]: string } = {
-      'murattal': 'مرتلة',
-      'muallim': 'معلم',
+      'tellawa': 'مرتلة',
+      '5atm': 'معلم',
       'tahqiq': 'تحقيق',
       'tadweer': 'تدوير',
       'hadr': 'حدر'

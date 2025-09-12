@@ -1,0 +1,84 @@
+// Audio Recordings Form Styles
+.audio-recordings-form {
+  border-radius: 16px;
+  padding: .75rem 1.25rem;
+  border: 1px solid var(--secondary-color);
+
+  .form-section {
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid rgba(191, 161, 97, 0.4);
+      margin-bottom: 15px;
+
+      h2 {
+        color: var(--primary-gold);
+        font-size: 1.25rem;
+        font-weight: 500;
+      }
+
+      .add-button {
+        margin-bottom: 5px;
+        background: var(--primary-gold);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: scale(1.05);
+        }
+
+        .icon {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+
+    .recordings-list {
+      min-height: 200px;
+      margin-bottom: 1rem;
+
+      .empty-state {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: var(--text-secondary);
+
+        p {
+          font-size: 1.1rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .btn {
+          border-radius: 12px;
+          font-size: 1rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          border: none;
+          padding: 0.75rem 1.5rem;
+          text-transform: none;
+          letter-spacing: 0.5px;
+
+          &.btn-primary {
+            background: var(--primary-gold);
+            color: white;
+
+            &:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 8px 25px rgba(191, 161, 97, 0.4);
+            }
+          }
+        }
+      }
+    }
+  }
+}

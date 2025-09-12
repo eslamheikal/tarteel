@@ -5,10 +5,8 @@ export interface Reader {
     imageUrl: string;
     bio?: string;
     audioRecordings?: AudioRecording[];
-    socialMedia?: {
-        facebook?: string;
-        youtube?: string;
-    };
+    facebook?: string;
+    youtube?: string;
 }
 
 export interface AudioRecording {
@@ -16,5 +14,5 @@ export interface AudioRecording {
     title: string;
     audioUrl: string;
     duration: string;
-    recitationType?: 'murattal' | 'muallim' | 'tahqiq' | 'tadweer' | 'hadr';
+    recitationType?: 'tellawa' | '5atm' | 'tahqiq' | 'tadweer' | 'hadr';
 }

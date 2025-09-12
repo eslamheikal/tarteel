@@ -53,6 +53,10 @@ export class ReadersList implements OnInit {
     this.router.navigate(['/', uniqueUrl]);
   }
 
+  goToAddReader(): void {
+    this.router.navigate(['/form']);
+  }
+
   onSearch(): void {
     if (!this.searchTerm.trim()) {
       this.filteredReaders = [...this.readers];

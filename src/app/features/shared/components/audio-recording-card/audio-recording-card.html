@@ -1,0 +1,59 @@
+<div class="audio-recording-card background-blur">
+  
+  <div class="recording-header">
+    @if (canRemove) {
+    <button type="button" (click)="onRemove()" class="remove-button">
+      <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+    }
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label [for]="'title-' + index">عنوان التسجيل *</label>
+      <input type="text" [id]="'title-' + index" [formControl]="getFormControl(recording, 'title')"
+        placeholder="مثال: سورة الأعراف" [class.error]="isFieldInvalid('title')" class="form-input background-blur">
+      @if (isFieldInvalid('title')) {
+      <span class="text-danger">{{ getFieldError('title') }}</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label [for]="'duration-' + index">المدة *</label>
+      <input type="text" [id]="'duration-' + index" [formControl]="getFormControl(recording, 'duration')"
+        placeholder="مثال: 04:12" [class.error]="isFieldInvalid('duration')" class="form-input background-blur">
+      @if (isFieldInvalid('duration')) {
+      <span class="text-danger">{{ getFieldError('duration') }}</span>
+      }
+      <small class="form-hint">تنسيق: دقائق:ثواني (مثال: 04:12)</small>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label [for]="'audioUrl-' + index">رابط التسجيل الصوتي *</label>
+      <input type="url" [id]="'audioUrl-' + index" [formControl]="getFormControl(recording, 'audioUrl')"
+        placeholder="https://example.com/audio.mp3" [class.error]="isFieldInvalid('audioUrl')"
+        class="form-input background-blur">
+      @if (isFieldInvalid('audioUrl')) {
+      <span class="text-danger">{{ getFieldError('audioUrl') }}</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label [for]="'recitationType-' + index">نوع التلاوة *</label>
+      <select [id]="'recitationType-' + index" [formControl]="getFormControl(recording, 'recitationType')"
+        [class.error]="isFieldInvalid('recitationType')" class="form-select background-blur">
+        @for (type of recitationTypes; track type.value) {
+        <option [value]="type.value">{{ type.label }}</option>
+        }
+      </select>
+      @if (isFieldInvalid('recitationType')) {
+      <span class="text-danger">{{ getFieldError('recitationType') }}</span>
+      }
+    </div>
+  </div>
+
+</div>

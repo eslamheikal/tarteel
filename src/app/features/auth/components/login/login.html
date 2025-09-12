@@ -1,0 +1,82 @@
+<div class="login-container">
+    <div class="login-card">
+
+        <div class="login-header">
+            <h2 class="login-title">تسجيل الدخول</h2>
+            <p class="login-subtitle">مرحباً بك في تطبيق ترتيل</p>
+        </div>
+
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+
+            <!-- Email Field -->
+            <div class="form-group">
+                <label for="email" class="form-label">البريد الإلكتروني</label>
+                <div class="input-group input-group-rtl">
+                    <input type="email" id="email" formControlName="email" class="form-control"
+                        [class.is-invalid]="getFieldError('email')" placeholder="أدخل بريدك الإلكتروني"
+                        autocomplete="email" />
+                    <span class="input-group-text">
+                        <i class="fas fa-envelope"></i>
+                    </span>
+                </div>
+                <div class="invalid-feedback" *ngIf="getFieldError('email')">
+                    {{ getFieldError('email') }}
+                </div>
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group">
+                <label for="password" class="form-label">كلمة المرور</label>
+                <div class="input-group input-group-rtl">
+                    <input type="password" id="password" formControlName="password" class="form-control"
+                        [class.is-invalid]="getFieldError('password')" placeholder="أدخل كلمة المرور"
+                        autocomplete="current-password" />
+                    <span class="input-group-text">
+                        <i class="fas fa-lock"></i>
+                    </span>
+                </div>
+                <div class="invalid-feedback" *ngIf="getFieldError('password')">
+                    {{ getFieldError('password') }}
+                </div>
+            </div>
+
+            <!-- Remember Me & Forgot Password -->
+            <div class="form-options">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="rememberMe" />
+                    <label class="form-check-label" for="rememberMe">
+                        تذكرني
+                    </label>
+                </div>
+                <a href="#" class="forgot-password d-none">نسيت كلمة المرور؟</a>
+            </div>
+
+            <!-- Error Message -->
+            <div class="alert alert-danger" *ngIf="errorMessage" role="alert">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                {{ errorMessage }}
+            </div>
+
+            <!-- Submit Button -->
+            <app-standard-button
+                type="submit"
+                variant="primary"
+                size="lg"
+                [fullWidth]="true"
+                [loading]="isLoading"
+                [disabled]="loginForm.invalid"
+                icon="<i class='fas fa-sign-in-alt'></i>"
+                (clicked)="onSubmit()">
+                {{ isLoading ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول' }}
+            </app-standard-button>
+        </form>
+
+        <!-- Demo Credentials -->
+        <div class="demo-credentials">
+            <h6>بيانات تجريبية:</h6>
+            <p><strong>البريد الإلكتروني:</strong> admin@tarteel.com</p>
+            <p><strong>كلمة المرور:</strong> password123</p>
+        </div>
+    </div>
+</div>
