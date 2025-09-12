@@ -54,7 +54,7 @@ export class FixedRecordingPlayer implements OnInit, OnDestroy, OnChanges {
     // Handle isPlaying changes
     if (changes['isPlaying'] && this.audio) {
       if (this.isPlaying) {
-        this.audio.play().catch(error => {
+        this.audio.play().catch((error: any) => {
           console.log('Play was prevented:', error);
         });
       } else {
@@ -140,7 +140,7 @@ export class FixedRecordingPlayer implements OnInit, OnDestroy, OnChanges {
     if (this.isPlaying) {
       setTimeout(() => {
         if (this.audio) {
-          this.audio.play().catch(error => {
+          this.audio.play().catch((error: any) => {
             console.log('Auto-play was prevented:', error);
           });
         }

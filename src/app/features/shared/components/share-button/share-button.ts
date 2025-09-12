@@ -62,7 +62,7 @@ export class ShareButton {
           .then(() => {
             this.shareSuccess.emit(this.shareData!);
           })
-          .catch((error) => {
+          .catch((error: any) => {
             console.log('Native share cancelled or failed:', error);
             this.fallbackShare(shareData);
           });
@@ -86,7 +86,7 @@ export class ShareButton {
           // You could show a toast notification here
           console.log('URL copied to clipboard:', shareData.url);
         })
-        .catch((error) => {
+        .catch((error: any) => {
           console.error('Failed to copy to clipboard:', error);
           this.shareError.emit('Failed to copy to clipboard');
         });
