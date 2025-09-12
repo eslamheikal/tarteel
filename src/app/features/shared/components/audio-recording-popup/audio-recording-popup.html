@@ -63,12 +63,21 @@
     </div>
 
     <div class="popup-footer">
-      <button type="button" (click)="onCancel()" class="btn btn-secondary">
+      <app-standard-button
+        type="button"
+        variant="secondary"
+        size="md"
+        (clicked)="onCancel()">
         إلغاء
-      </button>
-      <button type="button" (click)="onSave()" [disabled]="recordingForm.invalid" class="btn btn-primary">
+      </app-standard-button>
+      <app-standard-button
+        type="button"
+        variant="primary"
+        size="md"
+        [disabled]="recordingForm.invalid"
+        (clicked)="onSave()">
         {{ editingRecording ? 'تحديث' : 'حفظ' }}
-      </button>
+      </app-standard-button>
     </div>
   </div>
 </div>

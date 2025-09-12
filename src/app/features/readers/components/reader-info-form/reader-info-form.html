@@ -63,12 +63,21 @@
 
     <!-- Form Actions -->
     <div class="form-actions">
-      <button type="button" (click)="onCancel()" class="btn btn-secondary">
+      <app-standard-button
+        type="button"
+        variant="secondary"
+        size="md"
+        (clicked)="onCancel()">
         إلغاء
-      </button>
-      <button type="button" (click)="onSubmit()" [disabled]="formGroup.invalid" class="btn btn-primary">
+      </app-standard-button>
+      <app-standard-button
+        type="button"
+        variant="primary"
+        size="md"
+        [disabled]="formGroup.invalid"
+        (clicked)="onSubmit()">
         حفظ 
-      </button>
+      </app-standard-button>
     </div>
   </div>
 </form>

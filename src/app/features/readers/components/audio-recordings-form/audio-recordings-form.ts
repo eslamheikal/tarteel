@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { AudioRecordingPopup } from '../../../shared/components/audio-recording-popup/audio-recording-popup';
 import { AudioRecordingDisplayCard } from '../../../shared/components/audio-recording-display-card/audio-recording-display-card';
+import { StandardButtonComponent } from '../../../shared/components/standard-button/standard-button.component';
 
 @Component({
   selector: 'app-audio-recordings-form',
-  imports: [CommonModule, ReactiveFormsModule, AudioRecordingPopup, AudioRecordingDisplayCard],
+  imports: [CommonModule, ReactiveFormsModule, AudioRecordingPopup, AudioRecordingDisplayCard, StandardButtonComponent],
   templateUrl: './audio-recordings-form.html',
   styleUrl: './audio-recordings-form.scss'
 })

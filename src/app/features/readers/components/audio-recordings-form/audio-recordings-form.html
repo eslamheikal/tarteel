@@ -15,9 +15,13 @@
       @if (audioRecordings.length === 0) {
       <div class="empty-state">
         <p>لا توجد تسجيلات صوتية</p>
-        <button type="button" (click)="openAddPopup()" class="btn btn-primary">
+        <app-standard-button
+          type="button"
+          variant="primary"
+          size="md"
+          (clicked)="openAddPopup()">
           إضافة تسجيل جديد
-        </button>
+        </app-standard-button>
       </div>
       } @else {
       @for (recording of audioRecordings; track recording.id || $index) {
@@ -34,12 +38,20 @@
 
     <!-- Form Actions -->
     <div class="form-actions">
-      <button type="button" (click)="onCancel()" class="btn btn-secondary">
+      <app-standard-button
+        type="button"
+        variant="secondary"
+        size="md"
+        (clicked)="onCancel()">
         إلغاء
-      </button>
-      <button type="button" (click)="onSubmit()" class="btn btn-primary">
+      </app-standard-button>
+      <app-standard-button
+        type="button"
+        variant="primary"
+        size="md"
+        (clicked)="onSubmit()">
         حفظ
-      </button>
+      </app-standard-button>
     </div>
   </div>
 

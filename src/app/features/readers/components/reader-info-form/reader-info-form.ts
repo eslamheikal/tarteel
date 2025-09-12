@@ -2,10 +2,11 @@ import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { StandardButtonComponent } from '../../../shared/components/standard-button/standard-button.component';
 
 @Component({
   selector: 'app-reader-info-form',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, StandardButtonComponent],
   templateUrl: './reader-info-form.html',
   styleUrl: './reader-info-form.scss'
 })

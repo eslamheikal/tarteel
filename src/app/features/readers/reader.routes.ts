@@ -13,7 +13,7 @@ export const READER_ROUTES: Routes = [
         component: ReaderForm
     },
     {
-        path: ':uniqueUrl',
+        path: 'readers/:uniqueUrl',
         component: ReaderProfile
     }
 ];

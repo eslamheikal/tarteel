@@ -1,13 +1,21 @@
 <header id="header" class="background-blur">
-    <div class="container d-flex">
+    <div class="container d-flex justify-content-between">
 
-        <div id="headerLogo" class="logo text-center w-100">
+        <div id="headerLogo" class="logo">
             <h1 class="text-light m-0 p-0"><a [routerLink]="['/']">{{ appName }}</a></h1>
         </div>
 
-        <!-- <nav class="nav-menu d-none d-lg-block">
+        <div class="header-actions">
+            <app-standard-button
+              variant="outline-primary"
+              size="sm"
+              [routerLink]="['/login']">
+              دخول
+            </app-standard-button>
+        </div>
+
+        <!-- <nav class="nav-menu">
             <ul>
-                <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['/']">الرئيسية</a></li>
                 <li routerLinkActive="active"><a [routerLink]="['/']">القراء</a></li>
                 <li routerLinkActive="active"><a [routerLink]="['/advices']">وقفات</a></li>
             </ul>

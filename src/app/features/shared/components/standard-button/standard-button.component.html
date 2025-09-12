@@ -1,0 +1,36 @@
+<button
+  [type]="type"
+  [class]="buttonClasses"
+  [disabled]="isDisabled"
+  [title]="tooltip"
+  [attr.aria-label]="ariaLabel"
+  (click)="onClick($event)"
+  [attr.aria-disabled]="isDisabled">
+  
+  <!-- Loading Spinner -->
+  @if (loading) {
+    <span class="standard-button__spinner" aria-hidden="true">
+      <svg class="spinner" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="31.416" stroke-dashoffset="31.416">
+          <animate attributeName="stroke-dasharray" dur="2s" values="0 31.416;15.708 15.708;0 31.416" repeatCount="indefinite"/>
+          <animate attributeName="stroke-dashoffset" dur="2s" values="0;-15.708;-31.416" repeatCount="indefinite"/>
+        </circle>
+      </svg>
+    </span>
+  }
+
+  <!-- Left Icon -->
+  @if (icon && iconPosition === 'left' && !loading) {
+    <span class="standard-button__icon standard-button__icon--left" [innerHTML]="icon" aria-hidden="true"></span>
+  }
+
+  <!-- Button Content -->
+  <span class="standard-button__content">
+    <ng-content></ng-content>
+  </span>
+
+  <!-- Right Icon -->
+  @if (icon && iconPosition === 'right' && !loading) {
+    <span class="standard-button__icon standard-button__icon--right" [innerHTML]="icon" aria-hidden="true"></span>
+  }
+</button>

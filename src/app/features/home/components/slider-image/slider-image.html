@@ -9,7 +9,13 @@
                     <div class="carousel-content animated fadeInUp fadeInDown">
                         <h2>ترتيلات </h2>
                         <p>تقدر تبحث عن قارئك المفضل</p>
-                        <div class="text-center"><a [routerLink]="['/readers']" class="btn-get-started">تصفح القراء</a>
+                        <div class="text-center">
+                          <app-standard-button
+                            variant="primary"
+                            size="lg"
+                            [routerLink]="['/readers']">
+                            تصفح القراء
+                          </app-standard-button>
                         </div>
                     </div>
                 </div>

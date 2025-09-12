@@ -1,10 +1,11 @@
 import { Component, Input, Output, EventEmitter, inject, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { StandardButtonComponent } from '../standard-button/standard-button.component';
 
 @Component({
   selector: 'app-audio-recording-popup',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, StandardButtonComponent],
   templateUrl: './audio-recording-popup.html',
   styleUrl: './audio-recording-popup.scss'
 })

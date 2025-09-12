@@ -1,0 +1,38 @@
+# Development files
+node_modules
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Firebase service account key (use environment variables instead)
+api/tarteel-key.json
+
+# Development server files
+local-server.ts
+nodemon.json
+
+# Test files
+*.spec.ts
+*.test.ts
+karma.conf.js
+src/**/*.spec.ts
+
+# IDE files
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs
+
+# Build artifacts (except dist)
+coverage
+.nyc_output
