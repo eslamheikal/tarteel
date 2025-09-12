@@ -59,7 +59,7 @@ export class AuthService {
         role: mappedUser.role
       };
 
-      const token = jwt.sign(tokenPayload, process.env['JWT_SECRET']);
+      const token = jwt.sign(tokenPayload, process.env['JWT_SECRET']); // No expiration - permanent token
 
       return Result.success({ user: mappedUser, token: token });
     } catch (error) {

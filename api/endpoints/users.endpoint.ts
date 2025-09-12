@@ -38,32 +38,28 @@ export default async function handler(req: Request, res: Response) {
     const { action } = req.query;
 
     if (method === 'GET' && action === 'get') {
-      const { id } = req.query;
-      const result = await userService.getUser(+id!, userId.value!, userRole.value!);
+      const { id, uniqueUrl } = req.query;
+      
+      const result = await uniqueUrl ? 
+        userService.getUserByUniqueUrl(uniqueUrl as string) :
+        userService.getUser(+id!, userId.value!, userRole.value!);
+
       return res.status(200).json({
         success: true,
         ...result
       });
     }
 
-    if (method === 'GET' && action === 'unique') {
-      const { uniqueUrl } = req.query;
-      const result = await userService.getUserByUniqueUrl(uniqueUrl as string);
-      return res.status(200).json({
-        success: true,
-        ...result
-      });
-    }
-
-    if (method === 'GET' && action === 'admins') {
+    if (method === 'GET' && (action === 'admins' || action === 'readers')) {
+      
       // Only admins can get admin list
-      if (userRole.value !== UserRoleEnum.Admin) {
+      if (action === 'admins' && userRole.value !== UserRoleEnum.Admin) {
         return res.status(403).json({
           error: 'Access denied. Admin role required.'
         });
       }
       
-      const result = await userService.getAdmins();
+      const result = await action === 'admins' ? userService.getAdmins() : userService.getReaders();
       return res.status(200).json({
         success: true,
         ...result
@@ -112,38 +108,6 @@ export default async function handler(req: Request, res: Response) {
       
       const { id } = req.query;
       const result = await userService.deleteUser(+id!);
-      return res.status(200).json({
-        success: true,
-        ...result
-      });
-    }
-
-    if (method === 'GET' && action === 'activate') {
-      // Only admins can activate users
-      if (userRole.value !== UserRoleEnum.Admin) {
-        return res.status(403).json({
-          error: 'Access denied. Admin role required.'
-        });
-      }
-      
-      const { id } = req.query;
-      const result = await userService.activateUser(+id!);
-      return res.status(200).json({
-        success: true,
-        ...result
-      });
-    }
-
-    if (method === 'GET' && action === 'deactivate') {
-      // Only admins can deactivate users
-      if (userRole.value !== UserRoleEnum.Admin) {
-        return res.status(403).json({
-          error: 'Access denied. Admin role required.'
-        });
-      }
-      
-      const { id } = req.query;
-      const result = await userService.deactivateUser(+id!);
       return res.status(200).json({
         success: true,
         ...result
