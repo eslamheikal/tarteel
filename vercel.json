@@ -15,11 +15,18 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
+      "src": "/api/auth",
+      "dest": "/api/endpoints/auth.endpoint.ts"
     },
     {
-      "src": "^(?!/api/).*",
+      "src": "/api/users",
+      "dest": "/api/endpoints/users.endpoint.ts"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
       "dest": "/index.html"
     }
   ]
