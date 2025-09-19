@@ -171,13 +171,33 @@
 .audio-recordings-section {
   margin-bottom: 25px;
 
-  h2 {
+  .recordings-header {
     color: var(--primary-gold);
-    font-size: 1.4rem;
     margin-bottom: 20px;
     text-align: center;
     border-bottom: 2px solid rgba(191, 161, 97, 0.4);
     padding-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    h2 {
+      font-size: 1.4rem;
+    }
+
+    .recitation-type-dropdown {
+      background: var(--primary-gold);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 20px;
+      text-align: right;
+
+
+      &:focus {
+        outline: none;
+      }
+    }
   }
 }
 

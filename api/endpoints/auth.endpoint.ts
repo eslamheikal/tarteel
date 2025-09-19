@@ -28,7 +28,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const result = await authService.login(emailOrPhone, password);
       
       if (!result.isSuccess) {
-        return res.status(401).json({
+        return res.status(200).json({
           success: false,
           ...result
         });

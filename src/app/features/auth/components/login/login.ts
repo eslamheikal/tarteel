@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { StandardButtonComponent } from '../../../shared/components/standard-button/standard-button.component';
 import { AuthService } from '../../../../core/services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -16,9 +17,12 @@ export class Login implements OnInit {
   isLoading = false;
   errorMessage = '';
 
+  private toastr = inject(ToastrService);
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private route: ActivatedRoute,
     private authService: AuthService
   ) {}
 
@@ -35,6 +39,7 @@ export class Login implements OnInit {
   }
 
   onSubmit(): void {
+
     if (this.loginForm.valid) {
       this.isLoading = true;
       this.errorMessage = '';
@@ -43,19 +48,20 @@ export class Login implements OnInit {
 
         if (res.success) {
           
-          // Only save token and user data if "Remember Me" is checked
-          if (this.loginForm.value.rememberMe) {
-            this.authService.saveToken(res.data.token);
-            this.authService.saveUser(res.data.user);
-          } else {
-            // Clear any existing stored data
-            this.authService.removeToken();
-            this.authService.removeUser();
-          }
+          // Always save token and user data for session management
+          this.authService.saveToken(res.value.token);
+          this.authService.saveUser(res.value.user);
 
-          this.router.navigate(['/']);
+          // Show success toast
+          this.toastr.success('تم تسجيل الدخول بنجاح', 'مرحباً');
+          
+          // Navigate to return URL if available, otherwise go to home
+          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+          this.router.navigate([returnUrl]);
         } else {
           this.errorMessage = res.message;
+          // Show error toast
+          this.toastr.error(res.message, res.errors[0]);
         }
 
       }, er => {}, () => this.isLoading = false);
@@ -63,6 +69,8 @@ export class Login implements OnInit {
 
     } else {
       this.markFormGroupTouched();
+      // Show warning toast for form validation
+      this.toastr.warning('يرجى ملء جميع الحقول المطلوبة', 'تحقق من البيانات');
     }
   }
 

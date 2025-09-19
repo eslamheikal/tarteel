@@ -45,3 +45,11 @@ a {
 a {
     text-decoration: none !important;
 }
+
+label {
+    color: #b8b7b7;
+}
+
+textarea {
+    color: #fff;
+}

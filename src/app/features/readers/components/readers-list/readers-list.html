@@ -4,18 +4,15 @@
     <div class="header-actions">
       <div class="search-container">
         <div class="search-input-wrapper">
-          <input 
-            type="text" 
-            [(ngModel)]="searchTerm" 
-            (input)="onSearch()"
-            placeholder="ابحث عن قارئ..."
-            class="search-input background-blur"
-          >
+          <input type="text" [(ngModel)]="searchTerm" (input)="onSearch()" placeholder="ابحث عن قارئ..."
+            class="search-input background-blur">
         </div>
       </div>
-      <button class="add-reader-btn" (click)="goToAddReader()">
+      <button class="add-reader-btn" (click)="goToAddReader()" *ngIf="isUserLoggedIn">
         <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+          </path>
         </svg>
         إضافة قارئ
       </button>
@@ -23,13 +20,24 @@
   </div>
 
   <div class="readers-grid" *ngIf="!isLoading && filteredReaders.length > 0">
-    <div class="reader-card background-blur" *ngFor="let reader of filteredReaders" (click)="goToReaderProfile(reader.uniqueUrl)">
+    <div class="reader-card background-blur" *ngFor="let reader of filteredReaders"
+      (click)="goToReaderProfile(reader.uniqueUrl)">
       <div class="reader-image">
         <img [src]="'assets/img/readers/' + reader.imageUrl" [alt]="reader.name" class="reader-photo"
           onerror="this.src='assets/img/readers/default-reader.png'">
       </div>
       <h3 class="reader-name">{{ reader.name }}</h3>
+
+       <button class="edit-reader-btn" (click)="goToEditReader(reader, $event)" *ngIf="isUserLoggedIn">
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+          </path>
+        </svg>
+      </button>
+
     </div>
+
   </div>
 
 
@@ -37,7 +45,8 @@
 
   <error-state *ngIf="error" [error]="error" (retryFunction)="loadReaders()" />
 
-  <no-results *ngIf="!isLoading && !error && searchTerm.length > 0 && filteredReaders.length === 0" (clearSearchClicked)="clearSearch()" />
+  <no-results *ngIf="!isLoading && !error && searchTerm.length > 0 && filteredReaders.length === 0"
+    (clearSearchClicked)="clearSearch()" />
 
   <!-- No Readers State -->
   <div class="no-readers background-blur" *ngIf="!isLoading && !error && readers.length == 0">
@@ -46,5 +55,5 @@
       <h3>لا توجد قراء متاحين</h3>
     </div>
   </div>
-  
+
 </div>

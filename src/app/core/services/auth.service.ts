@@ -13,7 +13,7 @@ export class AuthService {
     constructor(private http: HttpClient) { }
 
     login(emailOrPhone: string, password: string): Observable<any> {
-        return this.http.post(`${this.apiUrl}/auth/login`, { emailOrPhone, password });
+        return this.http.post(`${this.apiUrl}/auth?action=login`, { emailOrPhone, password });
     }
 
     saveToken(token: string): void {
@@ -45,7 +45,11 @@ export class AuthService {
     }
 
     isUserLoggedIn(): boolean {
-        return this.getUser() !== null;
+        return this.getToken() !== null;
     }
 
+    logout(): void {
+        this.removeToken();
+        this.removeUser();
+    }
 }   

@@ -7,6 +7,7 @@ import { ReaderService } from '../../../../core/services/reader.service';
 import { ErrorState } from "../../../shared/components/error-state/error-state";
 import { LoadingSpinner } from "../../../shared/components/loading-spinner/loading-spinner";
 import { NoResults } from "../../../shared/components/no-results/no-results";
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-readers-list',
@@ -23,8 +24,13 @@ export class ReadersList implements OnInit {
 
   constructor(
     private readerService: ReaderService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
+
+  get isUserLoggedIn(): boolean {
+    return this.authService.isUserLoggedIn();
+  }
 
   ngOnInit(): void {
     this.loadReaders();
@@ -55,6 +61,11 @@ export class ReadersList implements OnInit {
 
   goToAddReader(): void {
     this.router.navigate(['/form']);
+  }
+
+  goToEditReader(reader: Reader, event: Event): void {
+    event.stopPropagation(); // Prevent card click event
+    this.router.navigateByUrl('/form?reader=' + reader.uniqueUrl);
   }
 
   onSearch(): void {

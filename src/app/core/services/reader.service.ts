@@ -131,4 +131,10 @@ export class ReaderService {
         );
         return of(filteredReaders);
     }
+
+
+    addReader(reader: Reader): Observable<Reader> {
+        this.readers.push(reader);
+        return of(reader);
+    }
 }

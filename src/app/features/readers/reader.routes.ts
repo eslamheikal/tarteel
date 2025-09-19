@@ -2,6 +2,7 @@ import { Routes } from "@angular/router";
 import { ReadersList } from "./components/readers-list/readers-list";
 import { ReaderProfile } from "./components/reader-profile/reader-profile";
 import { ReaderForm } from "./components/reader-form/reader-form";
+import { AuthGuard } from "../../core/guards/auth.guard";
 
 export const READER_ROUTES: Routes = [
     {
@@ -10,10 +11,11 @@ export const READER_ROUTES: Routes = [
     },
     {
         path: 'form',
-        component: ReaderForm
+        component: ReaderForm,
+        canActivate: [AuthGuard]
     },
     {
-        path: 'readers/:uniqueUrl',
+        path: ':uniqueUrl',
         component: ReaderProfile
     }
 ];

@@ -35,13 +35,13 @@ export class AuthService {
 
       // Check if user exists
       if (users.length === 0) {
-        return Result.failure(['User not found']);
+        return Result.failure(['المستخدم غير موجود']);
       }
 
       // Check if password is correct
       const user = users.find(user => user.password === password);
       if (user === undefined) {
-        return Result.failure(['Invalid password']);
+        return Result.failure(['كلمة المرور غير صحيحة']);
       }
 
       const mappedUser = UserMapper.toModel(user);
@@ -64,7 +64,7 @@ export class AuthService {
       return Result.success({ user: mappedUser, token: token });
     } catch (error) {
       console.error('Login error:', error);
-      return Result.failure(['Login failed. Please try again.']);
+      return Result.failure(['فشل تسجيل الدخول. يرجى المحاولة مرة أخرى.']);
     }
   }
 
@@ -118,7 +118,7 @@ export class AuthService {
       const user = await userQueries.getById(payload.userId);
       
       if (!user) {
-        return Result.failure(['User not found']);
+        return Result.failure(['المستخدم غير موجود']);
       }
 
       const mappedUser = UserMapper.toModel(user);
@@ -143,7 +143,7 @@ export class AuthService {
       const user = await userQueries.getById(payload.userId);
       
       if (!user) {
-        return Result.failure(['User not found']);
+        return Result.failure(['المستخدم غير موجود']);
       }
 
       const mappedUser = UserMapper.toModel(user);

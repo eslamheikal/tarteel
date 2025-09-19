@@ -1,13 +1,27 @@
-import express, { Request, Response } from 'express';
-import cors from 'cors';
-import path from 'path';
-import fs from 'fs';
-import dotenv from 'dotenv';
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
+const fs = require('fs');
+const dotenv = require('dotenv');
+
+// Register ts-node to handle TypeScript files
+require('ts-node').register({
+  transpileOnly: true,
+  compilerOptions: {
+    module: 'commonjs',
+    target: 'es2020',
+    moduleResolution: 'node',
+    esModuleInterop: true,
+    allowSyntheticDefaultImports: true,
+    strict: false,
+    skipLibCheck: true
+  }
+});
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 // Middleware to parse JSON request bodies
 app.use(cors());
@@ -15,7 +29,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Request logging middleware
-app.use((req: Request, res: Response, next: any) => {
+app.use((req: any, _: any, next: any) => {
   console.log(`${req.method} ${req.originalUrl}`);
   next();
 });
@@ -28,7 +42,7 @@ console.log(`📁 Looking for API endpoints in: ${apiDirectory}`);
 if (fs.existsSync(apiDirectory)) {
   const files = fs.readdirSync(apiDirectory);
   console.log(`📄 Found files:`, files);
-  files.forEach(file => {
+  files.forEach((file: any) => {
     // We only want to register .ts files as routes
     if (file.endsWith('.ts')) {
       const routeName = file.replace('.endpoint.ts', '').replace('.ts', '');
@@ -38,9 +52,11 @@ if (fs.existsSync(apiDirectory)) {
 
       // Use app.all() to handle any HTTP method (GET, POST, etc.)
       // Use a more flexible route pattern that handles query parameters
-      app.all(`${routePath}*`, (req: Request, res: Response) => {
+      app.all(`${routePath}*`, (req: any, res: any) => {
         try {
           console.log(`🔍 Loading handler for ${routePath} from ${file}`);
+          // Clear require cache to ensure fresh module loading
+          delete require.cache[require.resolve(modulePath)];
           // Dynamically require the module
           const handler = require(modulePath).default;
           console.log(`📦 Handler loaded:`, typeof handler);
@@ -66,8 +82,8 @@ if (fs.existsSync(apiDirectory)) {
 }
 
 // Health check endpoint
-app.get('/api/health', (req: Request, res: Response) => {
-  res.json({ 
+app.get('/api/health', (req: any, res: any) => {
+  res.json({
     status: 'OK',
     message: 'Tarteel API is running',
     timestamp: new Date().toISOString(),
@@ -76,19 +92,19 @@ app.get('/api/health', (req: Request, res: Response) => {
 });
 
 // Error handling middleware
-app.use((err: any, req: Request, res: Response, next: any) => {
+app.use((err: any, req: any, res: any, next: any) => {
   console.error('Server Error:', err);
-  res.status(500).json({ 
+  res.status(500).json({
     error: 'Internal server error',
-    message: err.message 
+    message: err.message
   });
 });
 
 // 404 handler
-app.use('*', (req: Request, res: Response) => {
-  res.status(404).json({ 
+app.use('*', (req: any, res: any) => {
+  res.status(404).json({
     error: 'Not found',
-    message: `Route ${req.originalUrl} not found` 
+    message: `Route ${req.originalUrl} not found`
   });
 });
 
