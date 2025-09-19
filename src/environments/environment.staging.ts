@@ -1,4 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: ''
+  apiUrl: 'https://tarteel-quran.vercel.app/api',
+  appName: 'ترتيل'
 };

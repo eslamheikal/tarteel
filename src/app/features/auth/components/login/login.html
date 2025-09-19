@@ -44,7 +44,7 @@
             <!-- Remember Me & Forgot Password -->
             <div class="form-options">
                 <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="rememberMe" />
+                    <input type="checkbox" class="form-check-input" id="rememberMe" formControlName="rememberMe" />
                     <label class="form-check-label" for="rememberMe">
                         تذكرني
                     </label>
@@ -65,15 +65,14 @@
                 size="lg"
                 [fullWidth]="true"
                 [loading]="isLoading"
-                [disabled]="loginForm.invalid"
-                icon="<i class='fas fa-sign-in-alt'></i>"
-                (clicked)="onSubmit()">
+                [disabled]="loginForm.invalid || isLoading"
+                icon="<i class='fas fa-sign-in-alt'></i>">
                 {{ isLoading ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول' }}
             </app-standard-button>
         </form>
 
         <!-- Demo Credentials -->
-        <div class="demo-credentials">
+        <div class="demo-credentials d-none">
             <h6>بيانات تجريبية:</h6>
             <p><strong>البريد الإلكتروني:</strong> admin@tarteel.com</p>
             <p><strong>كلمة المرور:</strong> password123</p>
