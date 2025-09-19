@@ -9,9 +9,11 @@ const userService = new UserService();
 const authService = new AuthService();
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (handlePreflight(req, res)) return;
-
+  // Apply CORS headers first
   applyCors(req, res);
+  
+  // Handle preflight request
+  if (handlePreflight(req, res)) return;
   
   try {
 

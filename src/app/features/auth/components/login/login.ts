@@ -42,15 +42,19 @@ export class Login implements OnInit {
       this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe((res) => {
 
         if (res.success) {
-
-          if(this.loginForm.value.rememberMe) {
+          
+          // Only save token and user data if "Remember Me" is checked
+          if (this.loginForm.value.rememberMe) {
             this.authService.saveToken(res.data.token);
             this.authService.saveUser(res.data.user);
+          } else {
+            // Clear any existing stored data
+            this.authService.removeToken();
+            this.authService.removeUser();
           }
 
           this.router.navigate(['/']);
         } else {
-
           this.errorMessage = res.message;
         }
 
