@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Reader } from '../../../../core/models/reader.model';
-import { ReaderService } from '../../../../core/services/reader.service';
+import { User } from '../../../../core/models/user.model';
+import { UserService } from '../../../../core/services/user.service';
 import { ErrorState } from "../../../shared/components/error-state/error-state";
 import { LoadingSpinner } from "../../../shared/components/loading-spinner/loading-spinner";
 import { NoResults } from "../../../shared/components/no-results/no-results";
@@ -16,14 +16,14 @@ import { AuthService } from '../../../../core/services/auth.service';
   styleUrl: './readers-list.scss'
 })
 export class ReadersList implements OnInit {
-  readers: Reader[] = [];
-  filteredReaders: Reader[] = [];
+  readers: User[] = [];
+  filteredReaders: User[] = [];
   searchTerm: string = '';
   isLoading = true;
   error: string | null = null;
 
   constructor(
-    private readerService: ReaderService,
+    private readerService: UserService,
     private router: Router,
     private authService: AuthService
   ) {}
@@ -63,7 +63,7 @@ export class ReadersList implements OnInit {
     this.router.navigate(['/form']);
   }
 
-  goToEditReader(reader: Reader, event: Event): void {
+  goToEditReader(reader: User, event: Event): void {
     event.stopPropagation(); // Prevent card click event
     this.router.navigateByUrl('/form?reader=' + reader.uniqueUrl);
   }

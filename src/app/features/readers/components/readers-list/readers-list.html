@@ -3,7 +3,7 @@
     <h1>القراء</h1>
     <div class="header-actions">
       <div class="search-container">
-        <div class="search-input-wrapper">
+        <div class="search-input-wrapper" *ngIf="readers.length > 0">
           <input type="text" [(ngModel)]="searchTerm" (input)="onSearch()" placeholder="ابحث عن قارئ..."
             class="search-input background-blur">
         </div>
@@ -52,7 +52,7 @@
   <div class="no-readers background-blur" *ngIf="!isLoading && !error && readers.length == 0">
     <div class="no-readers-content">
       <i class="icon"></i>
-      <h3>لا توجد قراء متاحين</h3>
+      <h3>لا يوجد قراء متاحين</h3>
     </div>
   </div>
 

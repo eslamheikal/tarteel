@@ -1,4 +1,5 @@
 export enum UserRoleEnum {
   Admin,
-  Reader
+  Reader,
+  Unauthorized
 }

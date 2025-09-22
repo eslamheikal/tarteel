@@ -1,0 +1,32 @@
+<div class="modal fade" [class]="modalClasses" tabindex="-1" [attr.aria-labelledby]="modalId + 'Label'"
+  [attr.aria-hidden]="!isVisible" [attr.data-bs-backdrop]="options.backdrop" [attr.data-bs-keyboard]="options.keyboard">
+  <div class="modal-dialog" [class]="dialogClasses">
+    <div class="modal-content">
+      
+      <div class="modal-header" *ngIf="options.title">
+        <h5 class="modal-title" [id]="modalId + 'Label'">
+          {{ options.title }}
+        </h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="onCancel()">
+        </button>
+      </div>
+      
+      <div class="modal-body">
+        <p [innerHTML]="options.message"></p>
+      </div>
+
+      <div class="modal-footer">
+
+        <button type="button" class="btn" [class]="options.confirmButtonClass || 'btn-danger'" (click)="onConfirm()">
+          {{ options.confirmText || 'نعم' }}
+        </button>
+
+        <button type="button" *ngIf="options.showCancelButton !== false" class="btn"
+          [class]="options.cancelButtonClass || 'btn-secondary'" (click)="onCancel()">
+          {{ options.cancelText || 'لا, إلغاء' }}
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>

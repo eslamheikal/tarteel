@@ -3,11 +3,13 @@ import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 import { routes } from './app.routes';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 import { errorInterceptor } from './core/interceptors/error.interceptor';
 import { AuthGuard } from './core/guards/auth.guard';
+import { DeactivateGuard } from './core/guards/deactivate.guard';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +19,8 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimations(),
     AuthGuard,
+    DeactivateGuard,
+    NgxSpinnerService,
     provideToastr({
       timeOut: 5000,
       positionClass: 'toast-top-right',

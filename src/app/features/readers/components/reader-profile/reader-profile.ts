@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Reader, AudioRecording } from '../../../../core/models/reader.model';
-import { ReaderService } from '../../../../core/services/reader.service';
+import { User } from '../../../../core/models/user.model';
+import { AudioRecording } from '../../../../core/models/audio-recording';
+import { UserService } from '../../../../core/services/user.service';
 import { RecordingCard } from '../../../shared/components/recording-card/recording-card';
 import { FixedRecordingPlayer } from '../../../shared/components/fixed-recording-player/fixed-recording-player';
 import { NotFound } from "../../../shared/components/not-found/not-found";
+import { LoaderService } from '../../../shared/services/loader.service';
 
 @Component({
   selector: 'app-reader-profile',
@@ -14,17 +16,17 @@ import { NotFound } from "../../../shared/components/not-found/not-found";
   styleUrl: './reader-profile.scss'
 })
 export class ReaderProfile implements OnInit {
-  reader: Reader | undefined;
+  reader: User | undefined;
   audioRecordings: AudioRecording[] = [];
   selectedRecording: AudioRecording | null = null;
   isPlayerOpen = false;
   isPlaying = false;
-  isLoading = true;
   error: string | null = null;
 
   constructor(
     private route: ActivatedRoute,
-    private readerService: ReaderService
+    private readerService: UserService,
+    private loaderService: LoaderService
   ) {}
 
   ngOnInit(): void {
@@ -37,21 +39,21 @@ export class ReaderProfile implements OnInit {
   }
 
   loadReaderProfile(uniqueUrl: string): void {
-    this.isLoading = true;
-    this.error = null;
 
+    this.loaderService.showLoader();
     this.readerService.getReader(uniqueUrl).subscribe({
       next: (reader) => {
-        this.reader = reader;
-        if (reader) {
-          this.audioRecordings = reader.audioRecordings || [];
+        if (reader.isSuccess && reader.value) {
+          this.reader = reader.value;
+          // this.audioRecordings = reader.value.audioRecordings || [];
         }
-        this.isLoading = false;
+        else {
+          this.reader = {id: 0} as User;
+          this.error = reader.errors ? reader.errors[0] : 'حدث خطأ في تحميل بيانات القارئ';
+        }
       },
-      error: (error) => {
-        this.error = 'حدث خطأ في تحميل بيانات القارئ';
-        this.isLoading = false;
-        console.error('Error loading reader:', error);
+      complete: () => {
+        this.loaderService.hideLoader();
       }
     });
   }

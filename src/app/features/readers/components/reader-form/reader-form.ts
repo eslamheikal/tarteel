@@ -1,48 +1,119 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { Reader, AudioRecording } from '../../../../core/models/reader.model';
-import { ReaderService } from '../../../../core/services/reader.service';
-import { LoadingSpinner } from '../../../shared/components/loading-spinner/loading-spinner';
-import { ErrorState } from '../../../shared/components/error-state/error-state';
+import { ActivatedRoute, Router } from '@angular/router';
+import { User } from '../../../../core/models/user.model';
+import { UserService } from '../../../../core/services/user.service';
 import { ReaderInfoForm } from '../reader-info-form/reader-info-form';
 import { AudioRecordingsForm } from '../audio-recordings-form/audio-recordings-form';
+import { ToastrService } from 'ngx-toastr';
+import { UserRoleEnum } from '../../../../core/enums/user-role.enum';
+import { LoaderService } from '../../../shared/services/loader.service';
+import { CanComponentDeactivate } from '../../../../core/guards/deactivate.guard';
 
 @Component({
   selector: 'app-reader-form',
-  imports: [CommonModule, LoadingSpinner, ErrorState, ReaderInfoForm, AudioRecordingsForm],
+  imports: [CommonModule, ReaderInfoForm, AudioRecordingsForm],
   templateUrl: './reader-form.html',
   styleUrl: './reader-form.scss'
 })
-export class ReaderForm implements OnInit {
-  private router = inject(Router);
-  private readerService = inject(ReaderService);
+export class ReaderForm implements OnInit, CanComponentDeactivate {
 
-  // Layout state
-  isLoading = false;
-  isSubmitting = false;
-  error: string | null = null;
-  success = false;
+  private router = inject(Router);
+  private userService = inject(UserService);
+  private toastr = inject(ToastrService);
+  private loaderService = inject(LoaderService);
+  private route = inject(ActivatedRoute);
+
 
   // Data storage
-  readerData: any = null;
+  canLeave = true;
+  readerData: User = {} as User;
   audioRecordingsData: any[] = [];
 
 
   ngOnInit(): void {
-    // Layout component - no form initialization needed
+    this.route.queryParams.subscribe(params => {
+      const uniqueUrl = params['reader'];
+      if (uniqueUrl) {
+        this.loadReaderData(uniqueUrl);
+      }
+    });
+    
   }
 
-  onReaderInfoSubmit(data: any): void {
-    console.log('Reader Info Submitted:', data);
-    this.readerData = data;
-    // يمكن إضافة منطق خاص بحفظ معلومات القارئ هنا
-    // أو إرسال البيانات للخادم
+  loadReaderData(uniqueUrl: string): void {
+    this.loaderService.showLoader();
+
+    this.userService.getReader(uniqueUrl).subscribe((reader) => {
+      if (reader.isSuccess && reader.value) {
+        this.readerData = reader.value;
+      }
+      else {
+        this.toastr.error(reader.errors ? reader.errors[0] : 'فشل تحميل بيانات القارئ', 'خطأ');
+      }
+      // this.readerData = reader;
+    }, _ => { }, () => this.loaderService.hideLoader());
+
+  }
+
+  onReaderInfoSubmit(data: User): void {
+
+    // Create a complete user object with all required fields
+    this.readerData = {
+      id: data.id, // Will be set by the database
+      name: data.name || '',
+      email: this.readerData.uniqueUrl + '@reader.com',
+      password: this.readerData.password || '********',
+      imageUrl: data.imageUrl || '',
+      bio: data.bio || '',
+      role: this.readerData.role || UserRoleEnum.Reader,
+      joinedDate: this.readerData.joinedDate || new Date().toISOString(),
+      isActive: data.isActive,
+      uniqueUrl: data.uniqueUrl || '',
+      facebook: data.facebook || '',
+      youtube: data.youtube || ''
+    };
+
+    if (this.readerData.id > 0) {
+      this.updateReader(this.readerData);
+    } else {
+      this.addReader(this.readerData);
+    }
+
+  }
+
+  addReader(newReader: User): void {
+
+    this.loaderService.showLoader();
+    this.userService.addReader(newReader).subscribe((reader) => {
+      
+      if (reader.isSuccess && reader.value && reader.value.id > 0) {
+        this.toastr.success('تم إضافة القارئ بنجاح', 'مرحباً');
+        this.readerData.id = reader.value.id;
+      } else {
+        this.toastr.error(reader.errors ? reader.errors[0] : 'فشل إضافة القارئ', 'خطأ');
+      }
+
+    }, _ => { }, () => this.loaderService.hideLoader());
+  }
+
+  updateReader(updatedReader: User): void {
+    this.loaderService.showLoader();
+    this.userService.updateReader(updatedReader).subscribe((reader) => {
+      
+      if (reader.isSuccess && reader.value && reader.value.id > 0) {
+        this.toastr.success('تم تحديث القارئ بنجاح', 'مرحباً');
+        this.readerData.id = reader.value.id;
+      } else {
+        this.toastr.error(reader.errors ? reader.errors[0] : 'فشل تحديث القارئ', 'خطأ');
+      }
+
+    }, _ => { }, () => this.loaderService.hideLoader());
   }
 
   onReaderInfoCancel(): void {
-    console.log('Reader Info Cancelled');
-    // يمكن إضافة منطق خاص بإلغاء معلومات القارئ هنا
+    this.readerData = null!;
+    this.router.navigate(['/']);
   }
 
   onAudioRecordingsSubmit(recordings: any[]): void {
@@ -53,16 +124,16 @@ export class ReaderForm implements OnInit {
   }
 
   onAudioRecordingsCancel(): void {
-    console.log('Audio Recordings Cancelled');
-    // يمكن إضافة منطق خاص بإلغاء التسجيلات الصوتية هنا
+    this.readerData = null!;
+    this.router.navigate(['/']);
   }
 
-  // Method to get complete reader data
-  getCompleteReaderData(): any {
-    return {
-      ...this.readerData,
-      audioRecordings: this.audioRecordingsData,
-      id: Date.now() // Generate temporary ID
-    };
+  checkReaderInfoChanges(): void {
+    this.canLeave = false;
   }
+
+  canDeactivate(): boolean {
+    return this.canLeave;
+  }
+
 }

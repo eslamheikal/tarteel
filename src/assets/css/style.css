@@ -1134,3 +1134,24 @@ section {
     }
   }
 }
+
+.form-check-input {
+
+  width: 18px;
+  height: 18px;
+
+  &:checked {
+    background-color: var(--primary-gold);
+    border-color: var(--primary-gold);
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 0.2rem rgba(191, 161, 97, 0.25);
+    outline: none;
+    border-color: var(--primary-gold);
+  }
+
+  &:active {
+    background-color: var(--primary-gold);
+  }
+}

@@ -1,9 +1,18 @@
 <div class="app-container">
     <app-header />
-    
+
     <div class="page-content container container-fluid">
         <router-outlet />
     </div>
-    
+
     <app-footer />
 </div>
+
+<ngx-spinner 
+    name="npx-spinner-loading" 
+    bdColor="rgba(0, 0, 0, 0.7)" 
+    size="medium" 
+    color="var(--primary-gold)" 
+    type="ball-scale-multiple"
+    [fullScreen]="true">
+</ngx-spinner>

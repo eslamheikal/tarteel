@@ -1,4 +1,4 @@
-@if (!isLoading && !error && reader) {
+@if (reader) {
 <div class="reader-profile-container">
   <!-- Header Section -->
   <div class="profile-header background-blur">
@@ -49,12 +49,10 @@
   </div>
 
 
-
-
   <!-- Audio Recordings Section -->
   @if (audioRecordings.length > 0) {
   <div class="audio-recordings-section">
-  
+
     <div class="recordings-header">
       <h2>المقاطع الصوتية</h2>
 
@@ -78,25 +76,16 @@
 
   <!-- No Recordings Message -->
   @if (audioRecordings.length === 0) {
-  <div class="no-recordings">
+  <div class="no-recordings background-blur">
     <div class="no-recordings-content">
       <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
       </svg>
-      <h3>لا توجد مقاطع صوتية متاحة</h3>
-      <p>لم يتم رفع أي مقاطع صوتية لهذا القارئ بعد</p>
+      <p>لم يتم رفع أي مقاطع صوتية لهذا القارئ</p>
     </div>
   </div>
   }
-</div>
-}
-
-<!-- Loading State -->
-@if (isLoading) {
-<div class="loading-container">
-  <div class="loading-spinner"></div>
-  <p>جاري تحميل بيانات القارئ...</p>
 </div>
 }
 
@@ -118,7 +107,7 @@
 }
 
 <!-- Not Found State -->
-<not-found *ngIf="!isLoading && !error && !reader" />
+<not-found *ngIf="reader?.id == 0" />
 
 <!-- Fixed Recording Player -->
 <app-fixed-recording-player [recording]="selectedRecording" [isVisible]="isPlayerOpen" [isPlaying]="isPlaying"

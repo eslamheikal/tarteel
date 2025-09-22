@@ -23,7 +23,7 @@ export class AudioRecordingService {
       return Result.success(audioRecordings.map(recording => AudioRecordingMapper.toModel(recording)));
     } catch (error) {
       console.error('Error getting audio recordings by user:', error);
-      return Result.failure(['Failed to get audio recordings by user']);
+      return Result.failure(['حدث خطأ في تحميل التسجيلات الصوتية']);
     }
   }
 
@@ -33,17 +33,17 @@ export class AudioRecordingService {
       return Result.success(audioRecording);
     } catch (error) {
       console.error('Error adding audio recording:', error);
-      return Result.failure(['Failed to add audio recording']);
+      return Result.failure(['حدث خطأ في إضافة التسجيل الصوتي']);
     }
   }
 
   async deleteAudioRecording(audioRecordingId: number): Promise<Result<boolean>> {
     try {
       const result = await audioRecordingCommands.delete(audioRecordingId);
-      return result ? Result.success(true) : Result.failure(['Audio recording not found']);
+      return result ? Result.success(true) : Result.failure(['التسجيل الصوتي غير موجود']);
     } catch (error) {
       console.error('Error deleting audio recording:', error);
-      return Result.failure(['Failed to delete audio recording']);
+      return Result.failure(['حدث خطأ في حذف التسجيل الصوتي']);
     }
   }
 

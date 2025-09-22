@@ -56,7 +56,7 @@ export class DownloadButton {
       
     } catch (error) {
       console.error('Download failed:', error);
-      this.downloadError.emit(error instanceof Error ? error.message : 'Download failed');
+      this.downloadError.emit(error instanceof Error ? error.message : 'فشل في التحميل');
     }
   }
 

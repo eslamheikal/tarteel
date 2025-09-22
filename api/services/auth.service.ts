@@ -194,7 +194,7 @@ export class AuthService {
 
   async getUserRoleFromToken(token: string): Promise<Result<UserRoleEnum>> {
     try {
-      const tokenResult = await this.validateToken(token);
+      const tokenResult = await this.validateToken(token || '');
       return Result.success(tokenResult.value!.role as UserRoleEnum);
     } catch (error) {
       console.error('Get user role from token error:', error);

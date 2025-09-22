@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AudioRecording } from '../../../../core/models/reader.model';
+import { AudioRecording } from '../../../../core/models/audio-recording';
 import { DownloadButton } from '../download-button/download-button';
 import { ShareButton, ShareData } from '../share-button/share-button';
 

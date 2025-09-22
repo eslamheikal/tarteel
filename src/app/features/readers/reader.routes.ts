@@ -3,6 +3,7 @@ import { ReadersList } from "./components/readers-list/readers-list";
 import { ReaderProfile } from "./components/reader-profile/reader-profile";
 import { ReaderForm } from "./components/reader-form/reader-form";
 import { AuthGuard } from "../../core/guards/auth.guard";
+import { DeactivateGuard } from "../../core/guards/deactivate.guard";
 
 export const READER_ROUTES: Routes = [
     {
@@ -12,7 +13,8 @@ export const READER_ROUTES: Routes = [
     {
         path: 'form',
         component: ReaderForm,
-        canActivate: [AuthGuard]
+        canActivate: [AuthGuard],
+        canDeactivate: [DeactivateGuard]
     },
     {
         path: ':uniqueUrl',

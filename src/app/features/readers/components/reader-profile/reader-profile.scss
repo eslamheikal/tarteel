@@ -217,9 +217,7 @@
 .no-recordings {
   text-align: center;
   padding: 60px 20px;
-  background: white;
   border-radius: 15px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
 }
 
 .no-recordings-content {
@@ -230,12 +228,7 @@
     font-style: normal;
     width: 4rem;
     height: 4rem;
-  }
-
-  h3 {
-    color: #666;
-    font-size: 1.5rem;
-    margin-bottom: 10px;
+    color: var(--primary-gold);
   }
 
   p {
