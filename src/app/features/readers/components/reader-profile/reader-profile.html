@@ -56,16 +56,17 @@
     <div class="recordings-header">
       <h2>المقاطع الصوتية</h2>
 
-      <!-- add dropdown for recitation type -->
-      <select class="recitation-type-dropdown">
-        <option value="tellawa">تلاوات</option>
-        <option value="5atm">ختمة</option>
-      </select>
+      <!-- Recitation type dropdown component -->
+      <app-recitation-type-dropdown 
+        [selectedType]="selectedRecitationType"
+        [showAllOption]="true"
+        (selectionChange)="onRecitationTypeChange($event)">
+      </app-recitation-type-dropdown>
 
     </div>
 
     <div class="recordings-grid">
-      @for (recording of audioRecordings; track recording.id) {
+      @for (recording of filteredRecordings; track recording.id) {
       <app-recording-card [recording]="recording" [isSelected]="isSelected(recording.id)"
         [isPlaying]="isPlayingRecording(recording.id)" (selected)="selectRecording($event)">
       </app-recording-card>

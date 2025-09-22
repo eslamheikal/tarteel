@@ -12,72 +12,58 @@
 
     <div class="popup-body">
       <form [formGroup]="recordingForm" class="recording-form">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="title">عنوان التسجيل *</label>
-            <input type="text" id="title" formControlName="title"
-              placeholder="مثال: سورة الأعراف" [class.error]="isFieldInvalid('title')"
-              class="form-input background-blur">
-            @if (isFieldInvalid('title')) {
-            <span class="text-danger">{{ getFieldError('title') }}</span>
-            }
-          </div>
-
-          <div class="form-group">
-            <label for="duration">المدة *</label>
-            <input type="text" id="duration" formControlName="duration"
-              placeholder="مثال: 04:12" [class.error]="isFieldInvalid('duration')" 
-              class="form-input background-blur">
-            @if (isFieldInvalid('duration')) {
-            <span class="text-danger">{{ getFieldError('duration') }}</span>
-            }
-            <small class="form-hint">تنسيق: دقائق:ثواني (مثال: 04:12)</small>
-          </div>
+        <div class="form-group">
+          <label for="title">عنوان التسجيل *</label>
+          <input type="text" id="title" formControlName="title" placeholder="مثال: سورة الأعراف"
+            [class.error]="isFieldInvalid('title')" class="form-input background-blur">
+          @if (isFieldInvalid('title')) {
+          <span class="text-danger">{{ getFieldError('title') }}</span>
+          }
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="audioUrl">رابط التسجيل الصوتي *</label>
-            <input type="url" id="audioUrl" formControlName="audioUrl"
-              placeholder="https://example.com/audio.mp3" [class.error]="isFieldInvalid('audioUrl')"
-              class="form-input background-blur">
-            @if (isFieldInvalid('audioUrl')) {
-            <span class="text-danger">{{ getFieldError('audioUrl') }}</span>
-            }
-          </div>
+         <div class="form-group">
+           <label for="duration">المدة *</label>
+           <input type="text" id="duration" formControlName="duration" placeholder="مثال: 04:12 أو 1:30:45"
+             [class.error]="isFieldInvalid('duration')" class="form-input background-blur">
+           @if (isFieldInvalid('duration')) {
+           <span class="text-danger">{{ getFieldError('duration') }}</span>
+           }
+           <small class="form-hint">تنسيق: دقائق:ثواني (04:12) أو ساعات:دقائق:ثواني (1:30:45)</small>
+         </div>
 
-          <div class="form-group">
-            <label for="recitationType">نوع التلاوة *</label>
-            <select id="recitationType" formControlName="recitationType"
-              [class.error]="isFieldInvalid('recitationType')" class="form-select background-blur">
-              @for (type of recitationTypes; track type.value) {
-              <option [value]="type.value">{{ type.label }}</option>
-              }
-            </select>
-            @if (isFieldInvalid('recitationType')) {
-            <span class="text-danger">{{ getFieldError('recitationType') }}</span>
-            }
-          </div>
+        <div class="form-group">
+          <label for="audioUrl">رابط التسجيل الصوتي *</label>
+          <input type="url" id="audioUrl" formControlName="audioUrl" placeholder="https://example.com/audio.mp3"
+            [class.error]="isFieldInvalid('audioUrl')" class="form-input background-blur">
+          @if (isFieldInvalid('audioUrl')) {
+          <span class="text-danger">{{ getFieldError('audioUrl') }}</span>
+          }
         </div>
+
+        <div class="form-group">
+          <label for="recitationType">نوع التلاوة *</label>
+          <app-recitation-type-dropdown [selectedType]="selectedRecitationType" [showAllOption]="false"
+            [disabled]="false" (selectionChange)="onRecitationTypeChange($event)"
+            [class.error]="isFieldInvalid('recitationType')">
+          </app-recitation-type-dropdown>
+          @if (isFieldInvalid('recitationType')) {
+          <span class="text-danger">{{ getFieldError('recitationType') }}</span>
+          }
+        </div>
+
       </form>
     </div>
 
     <div class="popup-footer">
-      <app-standard-button
-        type="button"
-        variant="secondary"
-        size="md"
-        (clicked)="onCancel()">
-        إلغاء
-      </app-standard-button>
-      <app-standard-button
-        type="button"
-        variant="primary"
-        size="md"
-        [disabled]="recordingForm.invalid"
+      <app-standard-button type="button" variant="primary" size="md" [disabled]="recordingForm.invalid"
         (clicked)="onSave()">
         {{ editingRecording ? 'تحديث' : 'حفظ' }}
       </app-standard-button>
+
+      <app-standard-button type="button" variant="secondary" size="md" (clicked)="onCancel()">
+        إلغاء
+      </app-standard-button>
+
     </div>
   </div>
 </div>

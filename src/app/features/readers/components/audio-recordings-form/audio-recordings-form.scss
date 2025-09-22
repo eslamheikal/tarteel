@@ -32,8 +32,14 @@
         cursor: pointer;
         transition: all 0.3s ease;
 
-        &:hover {
+        &:hover:not(:disabled) {
           transform: scale(1.05);
+        }
+
+        &:disabled {
+          background: #ccc;
+          cursor: not-allowed;
+          opacity: 0.6;
         }
 
         .icon {
@@ -50,7 +56,7 @@
       .empty-state {
         text-align: center;
         padding: 3rem 1rem;
-        color: var(--text-secondary);
+        color: var(--secondary-color);
 
         p {
           font-size: 1.1rem;

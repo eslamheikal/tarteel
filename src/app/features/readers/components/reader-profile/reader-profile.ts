@@ -8,20 +8,24 @@ import { RecordingCard } from '../../../shared/components/recording-card/recordi
 import { FixedRecordingPlayer } from '../../../shared/components/fixed-recording-player/fixed-recording-player';
 import { NotFound } from "../../../shared/components/not-found/not-found";
 import { LoaderService } from '../../../shared/services/loader.service';
+import { RecitationTypeDropdown } from '../../../shared/components/recitation-type-dropdown/recitation-type-dropdown';
+import { AudioTypeEnum } from '../../../../core/enums/audio-type.enum';
 
 @Component({
   selector: 'app-reader-profile',
-  imports: [CommonModule, RecordingCard, FixedRecordingPlayer, NotFound],
+  imports: [CommonModule, RecordingCard, FixedRecordingPlayer, NotFound, RecitationTypeDropdown],
   templateUrl: './reader-profile.html',
   styleUrl: './reader-profile.scss'
 })
 export class ReaderProfile implements OnInit {
   reader: User | undefined;
   audioRecordings: AudioRecording[] = [];
+  filteredRecordings: AudioRecording[] = [];
   selectedRecording: AudioRecording | null = null;
   isPlayerOpen = false;
   isPlaying = false;
   error: string | null = null;
+  selectedRecitationType: AudioTypeEnum | 'all' = 'all';
 
   constructor(
     private route: ActivatedRoute,
@@ -45,7 +49,8 @@ export class ReaderProfile implements OnInit {
       next: (reader) => {
         if (reader.isSuccess && reader.value) {
           this.reader = reader.value;
-          // this.audioRecordings = reader.value.audioRecordings || [];
+          this.audioRecordings = reader.value.audioRecordings || [];
+          this.filteredRecordings = [...this.audioRecordings];
         }
         else {
           this.reader = {id: 0} as User;
@@ -99,6 +104,21 @@ export class ReaderProfile implements OnInit {
     // This method is called when user seeks to a specific time
     // The actual seeking is handled by the fixed-recording-player
     console.log('Seek requested to:', time);
+  }
+
+  onRecitationTypeChange(selectedType: AudioTypeEnum | 'all'): void {
+    this.selectedRecitationType = selectedType;
+    this.filterRecordings();
+  }
+
+  private filterRecordings(): void {
+    if (this.selectedRecitationType === 'all') {
+      this.filteredRecordings = [...this.audioRecordings];
+    } else {
+      this.filteredRecordings = this.audioRecordings.filter(
+        recording => recording.recitationType === this.selectedRecitationType
+      );
+    }
   }
 
 }

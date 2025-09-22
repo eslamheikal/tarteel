@@ -1,0 +1,15 @@
+<select 
+  class="recitation-type-dropdown background-blur"
+  [value]="selectedType"
+  [disabled]="disabled"
+  (change)="onSelectionChange($event)"
+  aria-label="اختر نوع التلاوة">
+  
+  @if (showAllOption) {
+    <option [value]="allOption.value">{{ allOption.label }}</option>
+  }
+  
+  @for (type of recitationTypes; track type.value) {
+    <option [value]="type.value">{{ type.label }}</option>
+  }
+</select>

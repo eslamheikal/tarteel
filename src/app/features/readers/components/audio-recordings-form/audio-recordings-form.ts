@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AudioRecordingPopup } from '../../../shared/components/audio-recording-popup/audio-recording-popup';
 import { AudioRecordingDisplayCard } from '../../../shared/components/audio-recording-display-card/audio-recording-display-card';
 import { StandardButtonComponent } from '../../../shared/components/standard-button/standard-button.component';
+import { User } from '../../../../core/models/user.model';
 
 @Component({
   selector: 'app-audio-recordings-form',
@@ -17,8 +18,10 @@ export class AudioRecordingsForm {
   private router = inject(Router);
 
   @Input() initialData: any[] = [];
+  @Input() reader: User = {} as User;
   @Output() formSubmit = new EventEmitter<any[]>();
   @Output() formCancel = new EventEmitter<void>();
+
 
   audioRecordings: any[] = [];
   isPopupOpen: boolean = false;

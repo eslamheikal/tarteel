@@ -1,8 +1,9 @@
 <div class="audio-recordings-form background-blur">
   <div class="form-section">
+
     <div class="section-header">
       <h2>التسجيلات الصوتية</h2>
-      <button type="button" (click)="openAddPopup()" class="add-button">
+      <button type="button" (click)="openAddPopup()" class="add-button" *ngIf="reader.id">
         <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
           </path>
@@ -13,43 +14,33 @@
     <!-- Recordings List -->
     <div class="recordings-list">
       @if (audioRecordings.length === 0) {
+
       <div class="empty-state">
-        <p>لا توجد تسجيلات صوتية</p>
-        <app-standard-button
-          type="button"
-          variant="primary"
-          size="md"
-          (clicked)="openAddPopup()">
+        <p *ngIf="reader.id">لا توجد تسجيلات صوتية</p>
+        <app-standard-button type="button" variant="primary" size="md" (clicked)="openAddPopup()" *ngIf="reader.id">
           إضافة تسجيل جديد
         </app-standard-button>
+
+        <p *ngIf="!reader.id" class="mt-4">يجب عليك إنشاء القارئ أولاً</p>
       </div>
+
       } @else {
+
       @for (recording of audioRecordings; track recording.id || $index) {
-      <app-audio-recording-display-card 
-        [recording]="recording" 
-        [index]="$index"
-        (edit)="openEditPopup($event)"
-        (delete)="removeAudioRecording($event)"
-        (play)="onPlayRecording($event)">
+      <app-audio-recording-display-card [recording]="recording" [index]="$index" (edit)="openEditPopup($event)"
+        (delete)="removeAudioRecording($event)" (play)="onPlayRecording($event)">
       </app-audio-recording-display-card>
       }
+
       }
     </div>
 
     <!-- Form Actions -->
-    <div class="form-actions">
-      <app-standard-button
-        type="button"
-        variant="secondary"
-        size="md"
-        (clicked)="onCancel()">
+    <div class="form-actions d-none">
+      <app-standard-button type="button" variant="secondary" size="md" (clicked)="onCancel()">
         إلغاء
       </app-standard-button>
-      <app-standard-button
-        type="button"
-        variant="primary"
-        size="md"
-        (clicked)="onSubmit()">
+      <app-standard-button type="button" variant="primary" size="md" (clicked)="onSubmit()">
         حفظ
       </app-standard-button>
     </div>
@@ -58,9 +49,6 @@
 </div>
 
 <!-- Popup for Add/Edit - Outside the main container -->
-<app-audio-recording-popup 
-  [isOpen]="isPopupOpen"
-  [editingRecording]="editingRecording"
-  (close)="closePopup()"
+<app-audio-recording-popup [isOpen]="isPopupOpen" [editingRecording]="editingRecording" (close)="closePopup()"
   (save)="onSaveRecording($event)">
 </app-audio-recording-popup>

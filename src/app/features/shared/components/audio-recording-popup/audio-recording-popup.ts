@@ -2,10 +2,12 @@ import { Component, Input, Output, EventEmitter, inject, HostListener } from '@a
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { StandardButtonComponent } from '../standard-button/standard-button.component';
+import { RecitationTypeDropdown } from '../recitation-type-dropdown/recitation-type-dropdown';
+import { AudioTypeEnum } from '../../../../core/enums/audio-type.enum';
 
 @Component({
   selector: 'app-audio-recording-popup',
-  imports: [CommonModule, ReactiveFormsModule, StandardButtonComponent],
+  imports: [CommonModule, ReactiveFormsModule, StandardButtonComponent, RecitationTypeDropdown],
   templateUrl: './audio-recording-popup.html',
   styleUrl: './audio-recording-popup.scss'
 })
@@ -18,12 +20,7 @@ export class AudioRecordingPopup {
   @Output() save = new EventEmitter<any>();
 
   recordingForm!: FormGroup;
-
-  // Recitation types for dropdown
-  recitationTypes = [
-    { value: 'tellawa', label: 'تلاوة' },
-    { value: '5atm', label: 'ختم' }
-  ];
+  selectedRecitationType: AudioTypeEnum | 'all' = AudioTypeEnum.TELLAWA;
 
   ngOnInit(): void {
     this.initializeForm();
@@ -47,11 +44,14 @@ export class AudioRecordingPopup {
   }
 
   private initializeForm(): void {
+    const initialRecitationType = this.editingRecording?.recitationType || AudioTypeEnum.TELLAWA;
+    this.selectedRecitationType = initialRecitationType;
+    
     this.recordingForm = this.fb.group({
       title: [this.editingRecording?.title || '', [Validators.required, Validators.minLength(2)]],
       audioUrl: [this.editingRecording?.audioUrl || '', [Validators.required]],
-      duration: [this.editingRecording?.duration || '', [Validators.required, Validators.pattern(/^\d{1,2}:\d{2}$/)]],
-      recitationType: [this.editingRecording?.recitationType || 'tellawa', [Validators.required]]
+      duration: [this.editingRecording?.duration || '', [Validators.required, Validators.pattern(/^(\d{1,2}:\d{2}|\d{1,2}:\d{2}:\d{2})$/)]],
+      recitationType: [initialRecitationType, [Validators.required]]
     });
   }
 
@@ -102,8 +102,18 @@ export class AudioRecordingPopup {
     const errors = field.errors;
     if (errors['required']) return 'هذا الحقل مطلوب';
     if (errors['minlength']) return `يجب أن يكون على الأقل ${errors['minlength'].requiredLength} أحرف`;
-    if (errors['pattern']) return 'تنسيق غير صحيح';
+    if (errors['pattern']) {
+      if (fieldName === 'duration') {
+        return 'تنسيق غير صحيح. استخدم دقائق:ثواني (04:12) أو ساعات:دقائق:ثواني (1:30:45)';
+      }
+      return 'تنسيق غير صحيح';
+    }
     return 'قيمة غير صحيحة';
+  }
+
+  onRecitationTypeChange(selectedType: AudioTypeEnum | 'all'): void {
+    this.selectedRecitationType = selectedType;
+    this.recordingForm.patchValue({ recitationType: selectedType });
   }
 
   @HostListener('document:keydown.escape', ['$event'])

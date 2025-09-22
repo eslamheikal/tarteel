@@ -90,6 +90,7 @@ export class ReaderForm implements OnInit, CanComponentDeactivate {
       if (reader.isSuccess && reader.value && reader.value.id > 0) {
         this.toastr.success('تم إضافة القارئ بنجاح', 'مرحباً');
         this.readerData.id = reader.value.id;
+        this.canLeave = true;
       } else {
         this.toastr.error(reader.errors ? reader.errors[0] : 'فشل إضافة القارئ', 'خطأ');
       }
@@ -104,6 +105,7 @@ export class ReaderForm implements OnInit, CanComponentDeactivate {
       if (reader.isSuccess && reader.value && reader.value.id > 0) {
         this.toastr.success('تم تحديث القارئ بنجاح', 'مرحباً');
         this.readerData.id = reader.value.id;
+        this.canLeave = true;
       } else {
         this.toastr.error(reader.errors ? reader.errors[0] : 'فشل تحديث القارئ', 'خطأ');
       }

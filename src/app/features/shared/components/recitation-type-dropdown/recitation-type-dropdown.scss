@@ -1,0 +1,42 @@
+.recitation-type-dropdown {
+  color: white;
+  border-radius: 5px;
+  padding: 12px 10px;
+  text-align: right;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  direction: rtl;
+  width: 100%;
+
+
+  &:disabled {
+    background: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  option {
+    background: white;
+    color: #333;
+    padding: 8px 12px;
+    text-align: right;
+    direction: rtl;
+  }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .recitation-type-dropdown {
+    &:disabled {
+      background: #555;
+      color: #999;
+    }
+
+    option {
+      background: #333;
+      color: #fff;
+    }
+  }
+}
