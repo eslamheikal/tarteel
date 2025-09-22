@@ -1,9 +1,9 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { applyCors, handlePreflight } from '../utils/cors.js';
-import { handleError } from '../helpers/handle-error.helper.js';
-import { UserService } from '../services/user.service.js';
-import { AuthService } from '../services/auth.service.js';
-import { UserRoleEnum } from '../enums/user-role.enum.js';
+import { applyCors, handlePreflight } from '../utils/cors';
+import { handleError } from '../helpers/handle-error.helper';
+import { UserService } from '../services/user.service';
+import { AuthService } from '../services/auth.service';
+import { UserRoleEnum } from '../enums/user-role.enum';
 
 const userService = new UserService();
 const authService = new AuthService();
@@ -12,8 +12,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Apply CORS headers first
   applyCors(req, res);
 
-  // Handle preflight request
-  if (handlePreflight(req, res)) return;
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    return handlePreflight(req, res);
+  }
 
   try {
 

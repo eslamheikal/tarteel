@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { applyCors, handlePreflight } from '../utils/cors.js';
-import { handleError } from '../helpers/handle-error.helper.js';
-import { AuthService } from '../services/auth.service.js';
+import { applyCors, handlePreflight } from '../utils/cors';
+import { handleError } from '../helpers/handle-error.helper';
+import { AuthService } from '../services/auth.service';
 
 const authService = new AuthService();
 
@@ -9,8 +9,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Apply CORS headers first
   applyCors(req, res);
   
-  // Handle preflight request
-  if (handlePreflight(req, res)) return;
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    return handlePreflight(req, res);
+  }
   
   try {
     const { method } = req;
