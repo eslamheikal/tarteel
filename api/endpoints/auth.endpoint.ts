@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { applyCors, handlePreflight } from '../utils/cors';
-import { handleError } from '../helpers/handle-error.helper';
-import { AuthService } from '../services/auth.service';
+import { applyCors, handlePreflight } from '../utils/cors.js';
+import { handleError } from '../helpers/handle-error.helper.js';
+import { AuthService } from '../services/auth.service.js';
 
 const authService = new AuthService();
 
