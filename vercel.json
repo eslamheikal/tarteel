@@ -13,22 +13,22 @@
       }
     },
     {
-      "src": "api/endpoints/*.ts",
+      "src": "dist/api/endpoints/*.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/api/auth",
-      "dest": "/api/endpoints/auth.endpoint.ts"
+      "dest": "/dist/api/endpoints/auth.endpoint.js"
     },
     {
       "src": "/api/users",
-      "dest": "/api/endpoints/users.endpoint.ts"
+      "dest": "/dist/api/endpoints/users.endpoint.js"
     },
     {
       "src": "/api/audio-recordings",
-      "dest": "/api/endpoints/audio-recordings.endpoint.ts"
+      "dest": "/dist/api/endpoints/audio-recordings.endpoint.js"
     },
     {
       "handle": "filesystem"
@@ -39,10 +39,7 @@
     }
   ],
   "functions": {
-    "api/**/*.ts": {
-      "runtime": "nodejs20.x"
-    },
-    "api/**/*.js": {
+    "dist/api/**/*.js": {
       "runtime": "nodejs20.x"
     }
   }

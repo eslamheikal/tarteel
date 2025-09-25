@@ -18,5 +18,15 @@ Thumbs.db
 local-server.ts
 nodemon.json
 
+# TypeScript source files (we use compiled JS)
+api/**/*.ts
+!api/**/*.d.ts
+
+# Test files
+*.spec.ts
+*.test.ts
+**/*.spec.ts
+**/*.test.ts
+
 # Keep environment files for build process
 # src/environments/ files are needed for fileReplacements
