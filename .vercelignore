@@ -18,10 +18,6 @@ Thumbs.db
 local-server.ts
 nodemon.json
 
-# TypeScript source files (we use compiled JS)
-api/**/*.ts
-!api/**/*.d.ts
-
 # Test files
 *.spec.ts
 *.test.ts
