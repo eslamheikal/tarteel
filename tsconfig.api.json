@@ -20,11 +20,14 @@
     "useDefineForClassFields": false
   },
   "include": [
-    "api/**/*.ts"
+    "api/**/*.ts",
+    "./api/**/*.ts"
   ],
   "exclude": [
     "node_modules",
     "dist",
-    "src"
+    "src",
+    "**/*.spec.ts",
+    "**/*.test.ts"
   ]
 }
