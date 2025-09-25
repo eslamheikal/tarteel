@@ -19,15 +19,15 @@
   ],
   "routes": [
     {
-      "src": "/api/auth",
+      "src": "/api/auth(.*)",
       "dest": "/dist/api/endpoints/auth.endpoint.js"
     },
     {
-      "src": "/api/users",
+      "src": "/api/users(.*)",
       "dest": "/dist/api/endpoints/users.endpoint.js"
     },
     {
-      "src": "/api/audio-recordings",
+      "src": "/api/audio-recordings(.*)",
       "dest": "/dist/api/endpoints/audio-recordings.endpoint.js"
     },
     {
