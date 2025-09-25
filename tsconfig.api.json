@@ -19,14 +19,10 @@
     "emitDecoratorMetadata": true,
     "useDefineForClassFields": false
   },
-  "include": [
-    "api/**/*.ts",
-    "./api/**/*.ts"
-  ],
+  "include": ["api/**/*.ts"],
   "exclude": [
     "node_modules",
     "dist",
-    "src",
     "**/*.spec.ts",
     "**/*.test.ts"
   ]
