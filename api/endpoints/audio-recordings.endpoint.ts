@@ -1,4 +1,4 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { Request, Response } from 'express';
 import { applyCors, handlePreflight } from '../utils/cors';
 import { handleError } from '../helpers/handle-error.helper';
 import { AudioRecordingService } from '../services/audio-recording.service';
@@ -8,7 +8,7 @@ import { AudioTypeEnum } from '../enums/audio-type.enum';
 const audioRecordingService = new AudioRecordingService();
 const authService = new AuthService();
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: Request, res: Response) {
   // Apply CORS headers first
   applyCors(req, res);
 

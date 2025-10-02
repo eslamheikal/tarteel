@@ -1,6 +1,6 @@
-import { VercelResponse } from '@vercel/node';
+import { Response } from 'express';
 
-export function handleError(res: VercelResponse, error: any) {
+export function handleError(res: Response, error: any) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     
     // Handle specific error types

@@ -10,7 +10,6 @@
     "api": "ts-node --transpile-only local-server.ts",
     "api:dev": "nodemon",
     "dev:full": "concurrently \"npm run api:dev\" \"npm start\"",
-    "vercel-build": "ng build --configuration production && npm run build:api",
     "build:api": "tsc --project tsconfig.api.json"
   },
   "prettier": {
@@ -33,7 +32,6 @@
     "@angular/platform-browser": "^20.1.0",
     "@angular/router": "^20.1.0",
     "@fortawesome/fontawesome-free": "^7.0.1",
-    "@vercel/node": "^3.0.0",
     "bootstrap": "^5.3.8",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",

@@ -62,7 +62,7 @@ if (fs.existsSync(apiDirectory)) {
           console.log(`📦 Handler loaded:`, typeof handler);
           if (typeof handler === 'function') {
             console.log(`✅ Executing handler for ${req.method} ${req.originalUrl}`);
-            // Execute the Vercel-compatible function
+            // Execute the handler function
             handler(req, res);
           } else {
             console.error(`❌ No default export found in ${file}`);

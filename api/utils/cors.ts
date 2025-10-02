@@ -1,11 +1,10 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { Request, Response } from 'express';
 
 const ALLOWED_ORIGINS = [
   'http://localhost:4200',
-  'https://tarteel-quran.vercel.app',
 ];
 
-export function applyCors(req: VercelRequest, res: VercelResponse) {
+export function applyCors(req: Request, res: Response) {
   const origin = req.headers.origin as string | undefined;
   const isAllowed = origin && ALLOWED_ORIGINS.includes(origin);
 
@@ -23,7 +22,7 @@ export function applyCors(req: VercelRequest, res: VercelResponse) {
   res.setHeader('Access-Control-Allow-Credentials', 'true');
 }
 
-export function handlePreflight(req: VercelRequest, res: VercelResponse) {
+export function handlePreflight(req: Request, res: Response) {
   if (req.method === 'OPTIONS') {
     applyCors(req, res);
     res.status(204).end();

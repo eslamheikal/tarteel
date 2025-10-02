@@ -1,4 +1,4 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { Request, Response } from 'express';
 import { applyCors, handlePreflight } from '../utils/cors';
 import { handleError } from '../helpers/handle-error.helper';
 import { UserService } from '../services/user.service';
@@ -8,7 +8,7 @@ import { UserRoleEnum } from '../enums/user-role.enum';
 const userService = new UserService();
 const authService = new AuthService();
 
-export default async function handler(req: VercelRequest, res: VercelResponse) {
+export default async function handler(req: Request, res: Response) {
   // Apply CORS headers first
   applyCors(req, res);
 

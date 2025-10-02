@@ -2,7 +2,7 @@ import * as admin from 'firebase-admin';
 
 // Initialize Firebase Admin SDK
 if (!admin.apps.length) {
-  // For Vercel deployment, use environment variables
+  // For production deployment, use environment variables
   if (process.env.FIREBASE_PROJECT_ID) {
     admin.initializeApp({
       credential: admin.credential.cert({
