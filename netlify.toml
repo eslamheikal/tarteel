@@ -1,9 +1,16 @@
 [build]
-  command = "npm run build"
-  publish = "dist/tarteel"
+  publish = "dist/tarteel/browser"
+  command = "ng build --configuration production"
 
-# Single Page App fallback so Angular deep links work
+[build.environment]
+  NODE_VERSION = "18"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+[dev]
+  command = "npm start"
+  port = 4200
+  publish = "dist/tarteel/browser"

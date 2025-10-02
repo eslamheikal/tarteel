@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { AudioRecording } from '../../../../core/models/audio-recording';
 import { DownloadButton } from '../download-button/download-button';
 import { ShareButton, ShareData } from '../share-button/share-button';
+import { AudioTypeEnum } from '../../../../core/enums/audio-type.enum';
 
 @Component({
   selector: 'app-recording-card',
@@ -28,15 +29,13 @@ export class RecordingCard {
     };
   }
 
-  getRecitationTypeText(type: string): string {
+  getRecitationTypeText(type: AudioTypeEnum): string {
     const types: { [key: string]: string } = {
-      'tellawa': 'مرتلة',
-      '5atm': 'معلم',
-      'tahqiq': 'تحقيق',
-      'tadweer': 'تدوير',
-      'hadr': 'حدر'
+      [AudioTypeEnum.TELLAWA]: 'تلاوة',
+      [AudioTypeEnum.KHATMA]: 'ختمة',
     };
-    return types[type] || type;
+
+    return types[type] || type.toString();
   }
 
 }
