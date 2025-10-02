@@ -1,16 +1,11 @@
 [build]
   publish = "dist/tarteel/browser"
-  command = "ng build --configuration production"
+  command = "npm ci && npm run build:production"
 
 [build.environment]
-  NODE_VERSION = "18"
+  NODE_VERSION = "20"
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-
-[dev]
-  command = "npm start"
-  port = 4200
-  publish = "dist/tarteel/browser"
