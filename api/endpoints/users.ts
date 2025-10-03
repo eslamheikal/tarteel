@@ -17,7 +17,7 @@ export const handler: Handler = async (event) => {
       return {
         statusCode: 200,
         headers: { 'Content-Type': 'application/json' } as Record<string, string>,
-        body: JSON.stringify({ success: true, data: safe }),
+        body: JSON.stringify({ success: true, value: safe }),
       };
     }
 
